@@ -6,6 +6,7 @@
     $questions = recupQuestion();
     $reponses = recupReponse();
     $profils = recupProfil();
+    $categories = recupCateg();
 
     // traitement du formaulaire
     if (!empty($_POST)) {
@@ -13,16 +14,25 @@
     }  
 
     // recuperation données de la question choisi
-    if((isset($_GET['id'])&&!empty($_GET['id']))&&
-    (isset($_GET['date_question'])&&!empty($_GET['date_question']))&&
-    (isset($_GET['unique_key'])&&!empty($_GET['unique_key']))&&
-    (isset($_GET['question'])&&!empty($_GET['question']))){
-        $idQuestion = $_GET['id'];  
-        $pseudo = $_GET['pseudo'];
-        $categ = $_GET['categ'];
-        $uniqueKey = $_GET['unique_key'];
-        $dateQuestion = $_GET['date_question'];
-        $titreQuestion = $_GET['question'];     
+    if(isset($_GET['id']) && !empty($_GET['id'])){
+        $idQuestion = $_GET['id'];
+        foreach($questions as $question){
+            if($idQuestion == $question['Id_question']){
+                $uniqueKey = $question['unique_key'];
+                $dateQuestion = $question['Date_creation_question'];
+                $titreQuestion = $question['Titre_question'];
+                foreach($categories as $categorie){
+                    if($question['#Id_categorie'] == $categorie['Id_categorie']){
+                        $categ = $categorie['Libelle_categorie'];
+                    }
+                }
+                foreach($profils as $profil){
+                    if($question['#Id_profil'] == $profil['Id_profil']){ 
+                        $pseudo =  $profil['Pseudo_profil'];
+                    }
+                }
+            }
+        }
 ?>
         <div class="container">
             <div class="row">

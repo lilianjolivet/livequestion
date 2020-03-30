@@ -25,16 +25,7 @@
                             <div class="body-question">
                                 <div class="title-question">
                                    <h2 class="text-break"><a href="page-perso-question.php?
-                                   id=<?php echo $question['Id_question']?>&amp;
-                                   pseudo=<?php foreach($profils as $profil){?>
-                                            <?php if($question['#Id_profil'] == $profil['Id_profil']){ 
-                                             echo $profil['Pseudo_profil'];
-                                                    }?>
-                                            <?php }?>&amp;
-                                   categ=<?php echo $categories[$question['#Id_categorie']-1]['Libelle_categorie']?>&amp;
-                                   unique_key=<?php echo $question['unique_key']?>&amp;
-                                   date_question=<?php echo $question['Date_creation_question']?>&amp;
-                                   question=<?php echo $question['Titre_question']?>">
+                                   id=<?php echo $question['Id_question']?>">
                                    <?php echo $question['Titre_question']?></a></h2>
                                 </div>
                             </div>
