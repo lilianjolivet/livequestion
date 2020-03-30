@@ -17,7 +17,7 @@
     (isset($_GET['date_question'])&&!empty($_GET['date_question']))&&
     (isset($_GET['unique_key'])&&!empty($_GET['unique_key']))&&
     (isset($_GET['question'])&&!empty($_GET['question']))){
-        $idQuestion = $_GET['id']-1;  
+        $idQuestion = $_GET['id'];  
         $pseudo = $_GET['pseudo'];
         $categ = $_GET['categ'];
         $uniqueKey = $_GET['unique_key'];
@@ -66,7 +66,7 @@
                         }
                         ?>
                     </span>
-                    <input type="hidden" name="id_fk_question" value="<?php echo ($idQuestion + 1)?>"> 
+                    <input type="hidden" name="id_fk_question" value="<?php echo $idQuestion?>"> 
                     <input type="hidden" name="date" value="<?php echo date('Y-m-d', strtotime(date('Y-m-d')));?>">
                     <input type="hidden" name="fk_key" value="<?php echo $uniqueKey?>"> 
                 </div>
@@ -78,7 +78,6 @@
         (isset($_POST['id_fk_question']) && !empty($_POST['id_fk_question']))&&
         (isset($_POST['fk_key']) && !empty($_POST['fk_key']))){
             insertReponse($_POST);
-            header("Refresh:0");
         }
         ?>
         <div class="container">

@@ -1,5 +1,4 @@
 <?php 
-
 // traitement formulaire pour ajout question
 function traitementFormulaireQuestion(array $informations) {
     $erreurs = [];
@@ -7,14 +6,12 @@ function traitementFormulaireQuestion(array $informations) {
 	if (empty($informations['question'])) {
 		$erreurs['question'] = 'Veuillez saisir une question';
 	}
-
 	if (!empty($erreurs)) {
 		return [
 			'succes' => false,
 			'erreurs' => $erreurs,
 		];
 	}
-
 	return [
 		'succes' => true,
 	];
@@ -27,14 +24,12 @@ function traitementFormulaireReponse(array $informations) {
 	if (empty($informations['reponse'])) {
 		$erreurs['reponse'] = 'Veuillez saisir une reponse';
 	}
-
 	if (!empty($erreurs)) {
 		return [
 			'succes' => false,
 			'erreurs' => $erreurs,
 		];
 	}
-
 	return [
 		'succes' => true,
 	];
@@ -47,7 +42,6 @@ function traitementFormulaireInscription(array $informations) {
 	if (empty($informations['identifiant'])) {
 		$erreurs['identifiant'] = 'Veuillez saisir un identifiant';
 	}
-
 	if (empty($informations['email'])) {
 		$erreurs['email'] = 'Veuillez saisir un e-mail';
 	}
@@ -57,22 +51,18 @@ function traitementFormulaireInscription(array $informations) {
 	if (empty($informations['password-verif'])) {
 		$erreurs['password-verif'] = 'Veuillez confirmer le mot de passe';
 	}
-
 	if (empty($informations['sexe'] )) {
 		$erreurs['sexe'] = 'Veuillez choisir une valeur';
 	}
-
 	if (!empty($erreurs)) {
 		return [
 			'succes' => false,
 			'erreurs' => $erreurs,
 		];
 	}
-
 	return [
 		'succes' => true,
 	];
-
 }
 
 // traitement formulaire pour connexion
@@ -82,21 +72,17 @@ function traitementFormulaireConnexion(array $informations) {
 	if (empty($informations['identifiant'])) {
 		$erreurs['identifiant'] = 'Veuillez saisir un identifiant';
 	}
-
     if (empty($informations['password'])) {
 		$erreurs['password'] = 'Veuillez saisir un mot de passe';
 	}
-
 	if (!empty($erreurs)) {
 		return [
 			'succes' => false,
 			'erreurs' => $erreurs,
 		];
 	}
-
 	return [
 		'succes' => true,
 	];
-
 }
 ?>
