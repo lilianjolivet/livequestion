@@ -1,73 +1,58 @@
-<?php session_start();?>
+<?php 
+    require_once('./require/header.php');
+?>
+<body class="bodyForm">
+    <?php
+    require_once('./db/req_sql.php');
+    $profils = recupProfil();
 
-<html>
-    <head>
-        <title>Laura Goncalves</title>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" >
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-        <link rel="shortcut icon" type="image/x-icon" href="images/IMG-0036.png">
-        <link rel="stylesheet" href="style-formulaire-reg-log.css">
-    </head>
-    <body>
-        <?php
+    require_once('./traitement/traitement_formulaire.php');
+        if(!empty($_POST)){
+            $traitement = traitementFormulaireConnexion($_POST);
+        }
+    ?>
+    <form class="formContactIncri" action="#" method="POST">
 
-        require_once('./db/req_sql.php');
-        $profils = recupProfil();
+        <div class="segment">
+            <h1 class="titre">Connectez-vous</h1>
+        </div>
 
-        require_once('./traitement/traitement_formulaire.php');
-            if(!empty($_POST)){
-                $traitement = traitementFormulaireConnexion($_POST);
+        <label class="labelForm">
+            <input class="inputForm" type="text" placeholder="identifiant" name="identifiant"/>
+        </label>
+        <span class="erreur">
+            <?php
+            if (isset($traitement) && !$traitement['succes'] 
+                && isset($traitement['erreurs']['identifiant'])){
+                echo $traitement['erreurs']['identifiant'];
             }
-        ?>
-        <form class ="formulaire" action="#" method="POST">
-
-            <div class="segment">
-                <h1>Connectez-vous</h1>
-            </div>
-
-            <label>
-                <input type="text" placeholder="identifiant" name="identifiant"/>
-            </label>
-            <span class="erreur">
-                <?php
-                if (isset($traitement) && !$traitement['succes'] 
-                    && isset($traitement['erreurs']['identifiant'])){
-                    echo $traitement['erreurs']['identifiant'];
-                }
-                ?>
-            </span>
-            <label>
-                <input type="password" placeholder="Mot de passe" name="password"/>
-            </label>
-            <span class="erreur">
-                <?php
-                if (isset($traitement) && !$traitement['succes'] 
-                    && isset($traitement['erreurs']['password'])){
-                    echo $traitement['erreurs']['password'];
-                }
-                ?>
-            </span>
-            <button id="inscrire" class="red" type="submit">Se connecter</button>
-            <a href="inscription.php"><button id="connexion" class="red" type="button">S'inscrire</button></a>
-        </form>
-        <?php 
-        if(isset($_POST) && !empty($_POST)){
-            foreach($profils as $profil){
-                if(($profil['Pseudo_profil'] == $_POST['identifiant']) && (password_verify($_POST['password'],$profil['MotDePasse_profil']))){
-                    $_SESSION['utilisateur']=[
-                        'pseudo' => $profil['Pseudo_profil'],
-                        'id' => $profil['Id_profil'],
-                    ];
-                    header("Location: ./home.php");
-                }
+            ?>
+        </span>
+        <label class="labelForm">
+            <input class="inputForm" type="password" placeholder="Mot de passe" name="password"/>
+        </label>
+        <span class="erreur">
+            <?php
+            if (isset($traitement) && !$traitement['succes'] 
+                && isset($traitement['erreurs']['password'])){
+                echo $traitement['erreurs']['password'];
             }
-        }   
-        ?>
-    </body>
-</html>
+            ?>
+        </span>
+        <button class="buttonForm" type="submit">Se connecter</button>
+        <a id="btn-connexion" href="inscription.php"><button class="buttonForm" type="button">S'inscrire</button></a>
+    </form>
+    <?php 
+    if(isset($_POST) && !empty($_POST)){
+        foreach($profils as $profil){
+            if(($profil['Pseudo_profil'] == $_POST['identifiant']) && (password_verify($_POST['password'],$profil['MotDePasse_profil']))){
+                $_SESSION['utilisateur']=[
+                    'pseudo' => $profil['Pseudo_profil'],
+                    'id' => $profil['Id_profil'],
+                ];
+                header("Location: ./home.php");
+            }
+        }
+    }   
+    ?>
+<?php require_once('./require/footer.php')?>
