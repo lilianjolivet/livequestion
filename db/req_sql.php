@@ -93,6 +93,5 @@ function ajoutProfil(array $info) {
 	$fkRole = 1;
     $requete->execute();
 }
-
 ?>
 

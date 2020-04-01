@@ -68,7 +68,7 @@
         </div>
 
         <div class="container formulaire-reponse">
-            <form action="#" method="POST">
+            <form action="#" method="POST" id="myForm">
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="reponse">Ajouter une réponse</label>
@@ -89,15 +89,16 @@
                 <button type="submit" class="btn">valider</button>
             </form>
         </div>
-        <?php 
-            if((isset($_POST['reponse']) && !empty($_POST['reponse']))&&
+        <?php
+            $refresh = 0;
+            if(!empty($_POST['reponse'])&&
             (isset($_POST['id_fk_question']) && !empty($_POST['id_fk_question']))&&
             (isset($_POST['fk_key']) && !empty($_POST['fk_key']))){
                 insertReponse($_POST);
-                header('location: ./home.php');
+                $refresh = 1;
             }
         ?>
-        <div class="container">
+            <div class="container">
             <?php foreach ($reponses as $reponse){ ?>
                 <?php if (($reponse['#unique_key'] == $uniqueKey)){?>
                     <div class="row">
@@ -126,3 +127,12 @@
             <?php }?>
         </div>
     <?php }?>
+    <script>
+        function reload($nbe){
+            if($nbe == 1){
+                document.location.href="page-perso-question.php?id=<?php echo $_GET['id']?>";
+            } 
+        }
+    </script>
+    <script>reload(<?php echo $refresh?>);</script>
+    <?php require_once('./require/footer.php')?>
