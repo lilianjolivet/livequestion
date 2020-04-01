@@ -27,6 +27,9 @@
                     && isset($traitement['erreurs']['question'])) {
                     echo $traitement['erreurs']['question'];
                 }
+                if(isset($_POST['question']) && !empty($_POST['question']) && strlen($_POST['question'])> 255){
+                    echo 'votre question est trop longue (maximum 255 caractères)';
+                }
                 ?>
 			</span>
             <div class="form-group col-md-4">
@@ -44,7 +47,7 @@
     </form>
 </div>
 <?php 
-if(isset($_POST['question']) && !empty($_POST['question'])){
+if(isset($_POST['question']) && !empty($_POST['question']) && strlen($_POST['question'])<= 255){
     insertQuestion($_POST);
 }
 ?>

@@ -31,6 +31,12 @@
                         $pseudo =  $profil['Pseudo_profil'];
                     }
                 }
+                $nombreReponse = 0;
+                foreach($reponses as $reponse){
+                    if($uniqueKey == $reponse['#unique_key']){
+                        $nombreReponse = $nombreReponse + 1;
+                    }
+                }
             }
         }
 ?>
@@ -41,7 +47,7 @@
                         <div class="heading-question">
                             <p><a href=""><?php echo $pseudo ?></a></p>
                             <p><i class="far fa-clock"></i><?php echo $dateQuestion?></p>
-                            <p>réponse collecté</p>
+                            <p><i class="far fa-comment-dots"></i><?php echo $nombreReponse ?></p>
                             <p><i class="fas fa-tag"></i><?php echo $categ?></p>
                         </div>
                         <div class="divider"></div>
@@ -70,10 +76,10 @@
                     </div>
                     <span class="erreur col-md-12">
                         <?php
-                        if (isset($traitement) && !$traitement['succes'] 
-                            && isset($traitement['erreurs']['reponse'])) {
-                            echo $traitement['erreurs']['reponse'];
-                        }
+                            if (isset($traitement) && !$traitement['succes'] 
+                                && isset($traitement['erreurs']['reponse'])) {
+                                echo $traitement['erreurs']['reponse'];
+                            }
                         ?>
                     </span>
                     <input type="hidden" name="id_fk_question" value="<?php echo $idQuestion?>"> 
@@ -84,12 +90,12 @@
             </form>
         </div>
         <?php 
-        if((isset($_POST['reponse']) && !empty($_POST['reponse']))&&
-        (isset($_POST['id_fk_question']) && !empty($_POST['id_fk_question']))&&
-        (isset($_POST['fk_key']) && !empty($_POST['fk_key']))){
-            insertReponse($_POST);
-            header('location: ./home.php');
-        }
+            if((isset($_POST['reponse']) && !empty($_POST['reponse']))&&
+            (isset($_POST['id_fk_question']) && !empty($_POST['id_fk_question']))&&
+            (isset($_POST['fk_key']) && !empty($_POST['fk_key']))){
+                insertReponse($_POST);
+                header('location: ./home.php');
+            }
         ?>
         <div class="container">
             <?php foreach ($reponses as $reponse){ ?>

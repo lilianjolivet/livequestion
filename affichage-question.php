@@ -18,15 +18,17 @@
                                             <p><a href=""><?php echo $profil['Pseudo_profil']?></a></p>
                                     <?php }?>
                                 <?php }?>
-                            <p><?php 
-                                $nombreReponse = 0;
-                                foreach($reponses as $reponse){
-                                    if($question['unique_key'] == $reponse['#unique_key']){
-                                        $nombreReponse = $nombreReponse + 1;
+                            <p><i class="far fa-comment-dots"></i>
+                                <?php 
+                                    $nombreReponse = 0;
+                                    foreach($reponses as $reponse){
+                                        if($question['unique_key'] == $reponse['#unique_key']){
+                                            $nombreReponse = $nombreReponse + 1;
+                                        }
                                     }
-                                }
-                                echo $nombreReponse;
-                            ?></p>
+                                    echo $nombreReponse;
+                                ?>
+                            </p>
                             <p><i class="fas fa-tag"></i><?php echo $categories[$question['#Id_categorie']-1]['Libelle_categorie']?></p>
                         </div>
                         <div class="divider"></div>
