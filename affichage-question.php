@@ -3,6 +3,7 @@
     $questions = recupQuestion();
     $profils = recupProfil();
     $categories = recupCateg();
+    $reponses = recupReponse();
 ?>
 
 <section class="affichage-question">
@@ -17,7 +18,15 @@
                                             <p><a href=""><?php echo $profil['Pseudo_profil']?></a></p>
                                     <?php }?>
                                 <?php }?>
-                            <p><?php echo $question['unique_key']?></p>
+                            <p><?php 
+                                $nombreReponse = 0;
+                                foreach($reponses as $reponse){
+                                    if($question['unique_key'] == $reponse['#unique_key']){
+                                        $nombreReponse = $nombreReponse + 1;
+                                    }
+                                }
+                                echo $nombreReponse;
+                            ?></p>
                             <p><i class="fas fa-tag"></i><?php echo $categories[$question['#Id_categorie']-1]['Libelle_categorie']?></p>
                         </div>
                         <div class="divider"></div>

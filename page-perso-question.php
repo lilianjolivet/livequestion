@@ -88,6 +88,7 @@
         (isset($_POST['id_fk_question']) && !empty($_POST['id_fk_question']))&&
         (isset($_POST['fk_key']) && !empty($_POST['fk_key']))){
             insertReponse($_POST);
+            header('location: ./home.php');
         }
         ?>
         <div class="container">

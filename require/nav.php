@@ -23,7 +23,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./require/logout.php">Log Out Btn</a>
+                        <a class="nav-link" href="./require/logout.php">déconnexion</a>
                     </li>
                 </ul>
             </div>
