@@ -55,6 +55,7 @@
 <?php 
 if(!empty($_POST['question']) && strlen($_POST['question'])<= 255){
     insertQuestion($_POST);
+    header('Location: ./home.php');
 }
 ?>
 

@@ -13,8 +13,6 @@ function suppReponse($info){
     $requete->bindParam(':fk_id_question', $idQuestion);
     $idQuestion = $info;
     $requete->execute();
-    
-    
 }
 function suppQuestion($info){
     $connexion = connexionBdd();
@@ -26,5 +24,4 @@ function suppQuestion($info){
 
     header('Location: ../administration.php');
 }
-
 ?>
