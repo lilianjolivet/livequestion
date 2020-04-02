@@ -18,10 +18,17 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#"><?php 
                         if(isset($_SESSION['utilisateur']) && !empty($_SESSION['utilisateur'])){
-                            echo $_SESSION['utilisateur']['pseudo'].', '.$_SESSION['utilisateur']['id']; 
+                            echo $_SESSION['utilisateur']['pseudo'].', role: ('.$_SESSION['utilisateur']['role'].'), num id: ('.$_SESSION['utilisateur']['id'].')'; 
                         }?>
                         </a>
                     </li>
+                    <?php if($_SESSION['utilisateur']['role'] == 2){?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./administration.php">
+                            administration
+                        </a>
+                    </li>
+                    <?php }?>
                     <li class="nav-item">
                         <a class="nav-link" href="./require/logout.php">déconnexion</a>
                     </li>

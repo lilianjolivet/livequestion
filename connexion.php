@@ -49,10 +49,11 @@
                 $_SESSION['utilisateur']=[
                     'pseudo' => $profil['Pseudo_profil'],
                     'id' => $profil['Id_profil'],
+                    'role' => $profil['#Id_role']
                 ];
                 header("Location: ./home.php");
             }
         }
-    }   
+    }
     ?>
 <?php require_once('./require/footer.php')?>

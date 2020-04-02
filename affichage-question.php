@@ -15,7 +15,9 @@
                         <div class="heading-question">
                         <?php foreach($profils as $profil){?>
                                     <?php if($question['#Id_profil'] == $profil['Id_profil']){ ?>
-                                            <p><a href=""><?php echo $profil['Pseudo_profil']?></a></p>
+                                            <p><a href="profil-utilisateur.php?
+                                            id=<?php echo $profil['Id_profil']?>">
+                                            <?php echo $profil['Pseudo_profil']?></a></p>
                                     <?php }?>
                                 <?php }?>
                             <p><i class="far fa-comment-dots"></i>

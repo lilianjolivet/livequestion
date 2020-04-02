@@ -31,6 +31,9 @@ i{
     color: rgba(236,0,140, 0.7)!important;
 }
 
+/*===============================*/
+/*===============================*/
+
 /**** affichage question ****/
 .question{
     background-color: rgb(255, 255, 255);
@@ -69,6 +72,9 @@ i{
     padding-left:5px ;
 }
 
+/*===============================*/
+/*===============================*/
+
 /****   ajout question   ****/
 .form-control{
     color:rgba(236,0,140, 0.7)!important;
@@ -81,6 +87,9 @@ i{
     background:rgba(236,0,140, 0.7)!important;
     color:white!important;
 }
+
+/*===============================*/
+/*===============================*/
 
 /**** page perso question ****/
 
@@ -122,6 +131,18 @@ i{
 .bubble-reponse .body-reponse .title-reponse h2{
     font-size: 23px;
 }
+
+/*===============================*/
+/*===============================*/
+
+/**** profil-utilisateur ****/
+.title-profil{
+    margin-top: 20px;
+    color:rgba(236,0,140, 0.404);
+}
+
+/*===============================*/
+/*===============================*/
 
 /**** formulaire connexion/inscription ****/
 .bodyForm{
@@ -230,6 +251,9 @@ i{
 #btn-connexion  {
     color:#ec008c;
 }
+
+/*===============================*/
+/*===============================*/
 
 /**** traitement erreur ****/
 .erreur {
