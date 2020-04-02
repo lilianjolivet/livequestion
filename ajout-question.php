@@ -40,14 +40,20 @@
                     <?php }?>
                 </select>
             </div>
-            <input type="hidden" name="date" value="<?php echo date('Y-m-d', strtotime(date('Y-m-d')));?>"> 
+            <input type="hidden" name="date" value="
+                <?php
+                    date_default_timezone_set('Europe/Paris');
+                    $dateTime = new DateTime;
+                    echo $dateTime->format('Y-m-d H:i:s');
+                ?>
+            "> 
             <input type="hidden" name="id_key" value="<?php echo uniqid();?>"> 
         </div>    
         <button type="submit" class="btn">valider</button>
     </form>
 </div>
 <?php 
-if(isset($_POST['question']) && !empty($_POST['question']) && strlen($_POST['question'])<= 255){
+if(!empty($_POST['question']) && strlen($_POST['question'])<= 255){
     insertQuestion($_POST);
 }
 ?>

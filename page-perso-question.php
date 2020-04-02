@@ -29,6 +29,7 @@
                 foreach($profils as $profil){
                     if($question['#Id_profil'] == $profil['Id_profil']){ 
                         $pseudo =  $profil['Pseudo_profil'];
+                        $idProfil = $profil['Id_profil'];
                     }
                 }
                 $nombreReponse = 0;
@@ -45,7 +46,9 @@
                 <div class="question">
                     <div class="info-question">
                         <div class="heading-question">
-                            <p><a href=""><?php echo $pseudo ?></a></p>
+                            <p><a href="profil-membre.php?
+                            id=<?php echo $idProfil?>">
+                            <?php echo $pseudo ?></a></p>
                             <p><i class="far fa-clock"></i><?php echo $dateQuestion?></p>
                             <p><i class="far fa-comment-dots"></i><?php echo $nombreReponse ?></p>
                             <p><i class="fas fa-tag"></i><?php echo $categ?></p>
@@ -83,7 +86,13 @@
                         ?>
                     </span>
                     <input type="hidden" name="id_fk_question" value="<?php echo $idQuestion?>"> 
-                    <input type="hidden" name="date" value="<?php echo date('Y-m-d', strtotime(date('Y-m-d')));?>">
+                    <input type="hidden" name="date" value="
+                        <?php 
+                            date_default_timezone_set('Europe/Paris');
+                            $dateTime = new DateTime;
+                            echo $dateTime->format('Y-m-d H:i:s');
+                        ?>
+                    ">
                     <input type="hidden" name="fk_key" value="<?php echo $uniqueKey?>"> 
                 </div>
                 <button type="submit" class="btn">valider</button>

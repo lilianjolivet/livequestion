@@ -144,6 +144,19 @@ i{
 /*===============================*/
 /*===============================*/
 
+/**** page administration ****/ 
+.admin{
+    color:rgba(236,0,140, 0.404);
+}
+
+.cross-btn{
+    color:red!important;
+    font-size: 35px!important;
+}
+
+/*===============================*/
+/*===============================*/
+
 /**** formulaire connexion/inscription ****/
 .bodyForm{
     background-color: #EBECF0;
