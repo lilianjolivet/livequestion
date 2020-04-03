@@ -47,7 +47,7 @@
 ?>
 <div class="form-profil">
     <div class="container shadow p-3 mb-5 bg-white rounded">
-        <img src="./images/avatars/<?php echo $avatar?>" class="rounded mx-auto d-block" alt="...">
+        <img src="./images/avatars/<?php echo $avatar?>" class="rounded mx-auto d-block" alt="<?php echo $avatar?>">
         <form action="#" method="POST" enctype="multipart/form-data">
             <div class="form-group text-center">
                 <label for="avatar">Votre avatar</label>

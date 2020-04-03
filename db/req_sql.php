@@ -131,7 +131,7 @@
             $idProfil = $_SESSION['utilisateur']['id'];
             $requete->execute();
         }
-        header('Refresh:0');
+        header('Location: ./page-perso-profil.php');
     }
 ?>
 

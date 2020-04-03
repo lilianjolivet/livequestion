@@ -21,15 +21,11 @@
                 $uniqueKey = $question['unique_key'];
                 $dateQuestion = $question['Date_creation_question'];
                 $titreQuestion = $question['Titre_question'];
-                foreach($categories as $categorie){
-                    if($question['#Id_categorie'] == $categorie['Id_categorie']){
-                        $categ = $categorie['Libelle_categorie'];
-                    }
-                }
                 foreach($profils as $profil){
                     if($question['#Id_profil'] == $profil['Id_profil']){ 
                         $pseudo =  $profil['Pseudo_profil'];
                         $idProfil = $profil['Id_profil'];
+                        $avatar = $profil['avatar'];
                     }
                 }
                 $nombreReponse = 0;
@@ -46,12 +42,12 @@
                 <div class="question">
                     <div class="info-question">
                         <div class="heading-question">
+                            <img src="./images/avatars/<?php echo $avatar?>" alt="<?php echo $avatar?>" class="rounded avatar-option">
                             <p><a href="profil-membre.php?
                             id=<?php echo $idProfil?>">
                             <?php echo $pseudo ?></a></p>
                             <p><i class="far fa-clock"></i><?php echo $dateQuestion?></p>
-                            <p><i class="far fa-comment-dots"></i><?php echo $nombreReponse ?></p>
-                            <p><i class="fas fa-tag"></i><?php echo $categ?></p>
+                            <p><i class="far fa-comment-dots"></i><?php echo $nombreReponse?></p>
                         </div>
                         <div class="divider"></div>
                         <div class="bubble">
@@ -116,6 +112,7 @@
                                 <div class="heading-reponse">
                                 <?php foreach($profils as $profil){?>
                                     <?php if($reponse['#Id_profil'] == $profil['Id_profil']){ ?>
+                                            <img src="./images/avatars/<?php echo $profil['avatar']?>" alt="<?php echo $profil['avatar']?>" class="rounded avatar-option">
                                             <p><a href=""><?php echo $profil['Pseudo_profil']?></a></p>
                                     <?php }?>
                                 <?php }?>

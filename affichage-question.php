@@ -15,9 +15,13 @@
                         <div class="heading-question">
                         <?php foreach($profils as $profil){?>
                                     <?php if($question['#Id_profil'] == $profil['Id_profil']){ ?>
-                                            <p><a href="profil-membre.php?
-                                            id=<?php echo $profil['Id_profil']?>">
-                                            <?php echo $profil['Pseudo_profil']?></a></p>
+                                            <img src="./images/avatars/<?php echo $profil['avatar']?>" alt="<?php echo $profil['avatar']?>" class="rounded avatar-option"> 
+                                            <p>
+                                                <a href="profil-membre.php?
+                                                    id=<?php echo $profil['Id_profil']?>">
+                                                    <?php echo $profil['Pseudo_profil']?>
+                                                </a>
+                                            </p>
                                     <?php }?>
                                 <?php }?>
                             <p><i class="far fa-comment-dots"></i>
