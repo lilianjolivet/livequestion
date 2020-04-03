@@ -157,6 +157,27 @@ i{
 /*===============================*/
 /*===============================*/
 
+/**** page-perso-profil ****/
+.form-profil{
+    margin-top: 150px;
+    color:#ec008c;
+}
+.form-profil .container{
+    width: 370px!important;
+    padding: 10px!important;
+    background-color: rgba(100, 100, 100, 0.137)!important;
+    border-radius: 20px!important;
+    
+}
+.form-profil img{
+    margin-bottom:10px;
+}
+.form-profil button{
+    border: none!important;
+}
+/*===============================*/
+/*===============================*/
+
 /**** formulaire connexion/inscription ****/
 .bodyForm{
     background-color: #EBECF0;

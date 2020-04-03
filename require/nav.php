@@ -13,7 +13,7 @@
                         <a class="nav-link" href="./ajout-question.php">Ajouter</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Profil</a>
+                        <a class="nav-link" href="./page-perso-profil.php">Profil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"><?php 

@@ -15,7 +15,7 @@
  
 <div class="container formulaire">
     <form action="#" method="POST">
-    <h2 class="pt-4">Posez une question</h2>
+        <h2 class="pt-4">Posez une question</h2>
         <div class="form-row">
             <div class="form-group col-md-8">
                 <label for="question">Quelle est votre question ?</label>
@@ -34,7 +34,7 @@
 			</span>
             <div class="form-group col-md-4">
             <label for="inputCateg">catégorie</label>
-                <select typ="number" id="inputCateg" class="form-control" name="inputCateg">
+                <select type="number" id="inputCateg" class="form-control" name="inputCateg">
                     <?php foreach($categories as $categorie) {?>
                         <option value="<?php echo $categorie['Id_categorie']?>"><?php echo $categorie['Libelle_categorie']; ?></option>
                     <?php }?>
@@ -42,9 +42,9 @@
             </div>
             <input type="hidden" name="date" value="
                 <?php
-                    date_default_timezone_set('Europe/Paris');
-                    $dateTime = new DateTime;
-                    echo $dateTime->format('Y-m-d H:i:s');
+                date_default_timezone_set('Europe/Paris');
+                $dateTime = new DateTime;
+                echo $dateTime->format('Y-m-d H:i:s');
                 ?>
             "> 
             <input type="hidden" name="id_key" value="<?php echo uniqid();?>"> 

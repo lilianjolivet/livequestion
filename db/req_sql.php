@@ -94,5 +94,44 @@
         $fkRole = 1;
         $requete->execute();
     }
+
+    // requête modification BDD d'un profil
+    function modifProfil(array $info){
+        $connexion = connexionBdd();
+
+        if(!empty($info['avatar']) && !empty($info['id'])){
+            $requete = $connexion->prepare('UPDATE profil SET avatar = :avatar WHERE Id_profil = :Id_profil');
+            $requete->bindParam(':avatar', $avatar);
+            $requete->bindParam(':Id_profil', $idProfil);
+            $avatar = $info['avatar'];
+            $idProfil = $info['id'];
+            $requete->execute();
+        }
+        if(!empty($info['identifiant'])){
+            $requete = $connexion->prepare('UPDATE profil SET Pseudo_profil = :Pseudo_profil WHERE Id_profil = :Id_profil');
+            $requete->bindParam(':Pseudo_profil', $pseudo);
+            $requete->bindParam(':Id_profil', $idProfil);
+            $pseudo = $info['identifiant'];
+            $idProfil = $_SESSION['utilisateur']['id'];
+            $requete->execute();
+        }
+        if(!empty($info['email'])){
+            $requete = $connexion->prepare('UPDATE profil SET Mail_profil = :Mail_profil WHERE Id_profil = :Id_profil');
+            $requete->bindParam(':Mail_profil', $mail);
+            $requete->bindParam(':Id_profil', $idProfil);
+            $mail = $info['email'];
+            $idProfil = $_SESSION['utilisateur']['id'];
+            $requete->execute();
+        }
+        if(!empty($info['password'])){
+            $requete = $connexion->prepare('UPDATE profil SET MotDePasse_profil = :MotDePasse_profil WHERE Id_profil = :Id_profil');
+            $requete->bindParam(':MotDePasse_profil', $mdp);
+            $requete->bindParam(':Id_profil', $idProfil);
+            $mdp = $info['password'];
+            $idProfil = $_SESSION['utilisateur']['id'];
+            $requete->execute();
+        }
+        header('Refresh:0');
+    }
 ?>
 

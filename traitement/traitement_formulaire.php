@@ -85,4 +85,21 @@
 			'succes' => true,
 		];
 	}
+	// traitement formulaire pour modification données profil
+	function traitementFormulaireProfil(array $informations) {
+		$erreurs = [];
+
+		if (empty($informations['identifiant']) && empty($informations['password']) && empty($informations['email']) && empty($informations['avatar'])) {
+			$erreurs['message'] = 'Veuillez remplir au moins un champ';
+		}
+		if (!empty($erreurs)) {
+			return [
+				'succes' => false,
+				'erreurs' => $erreurs,
+			];
+		}
+		return [
+			'succes' => true,
+		];
+	}
 ?>
