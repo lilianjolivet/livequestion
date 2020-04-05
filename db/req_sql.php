@@ -1,5 +1,5 @@
 <?php 
-    require('db.php');
+    require_once('db.php');
 
     // récupération données question 
     function recupQuestion(){
@@ -39,6 +39,16 @@
         $requete->execute();
         $categories = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $categories;
+    }
+
+    // récupération données vote
+    function recupVote(){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare("SELECT * FROM `vote`");
+        $requete->execute();
+        $votes = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        return $votes;
     }
 
     // requête insertion BDD d'une question
@@ -92,6 +102,20 @@
         $motDePasse = $info['password'];
         $genre = $info['sexe'];
         $fkRole = 1;
+        $requete->execute();
+    }
+
+    // requête insertion BDD d'un vote
+    function ajoutVote(array $info){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare('INSERT INTO `vote`(`Action_vote`, `#Id_question`, `#Id_profil`) VALUES (:Action_vote, :Fk_Id_question, :Fk_Id_profil)');
+        $requete->bindParam(':Action_vote', $actionVote);
+        $requete->bindParam(':Fk_Id_question', $idFkQuestion);
+        $requete->bindParam(':Fk_Id_profil', $idFkProfil);
+        $actionVote = $info['vote'];
+        $idFkQuestion = $info['id_question'];
+        $idFkProfil = $info['id_profil'];
         $requete->execute();
     }
 

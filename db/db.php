@@ -1,5 +1,5 @@
 <?php
-
+	//connexion à la BDD
     function connexionBdd() {
 		$user = "root";
    		$pass = "root";

@@ -18,6 +18,7 @@ a{
 i{
     padding-right:3px ;
 }
+
 .avatar-option{
     width: 50px;
 }
@@ -28,6 +29,16 @@ i{
     background: 
     #d4d4d47c;
     margin: 10px auto;
+}
+
+/*-- bouton like --*/
+.btn-like{
+    text-decoration: none!important;
+    border: none;
+    background-color:transparent;
+}
+.like-on{
+    color:red;
 }
 
 /**** NAVBAR ****/ 

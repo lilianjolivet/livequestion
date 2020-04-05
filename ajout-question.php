@@ -53,11 +53,21 @@
     </form>
 </div>
 <?php 
+$refresh = 0;
 if(!empty($_POST['question']) && strlen($_POST['question'])<= 255){
     insertQuestion($_POST);
-    header('Location: ./home.php');
+    $refresh = 1;
 }
 ?>
+<script>
+    function reload($nbe){
+        if($nbe == 1){
+            document.location.href="./home.php";
+        } 
+    }
+</script>
+<script>reload(<?php echo $refresh?>);</script>
+<?php require_once('./require/footer.php')?>
 
 
 

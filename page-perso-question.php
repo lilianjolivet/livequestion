@@ -7,6 +7,9 @@
     $reponses = recupReponse();
     $profils = recupProfil();
     $categories = recupCateg();
+    $votes = recupVote();
+
+    $adresse = 'page-perso-question';
 
     // traitement du formaulaire
     if (!empty($_POST)) {
@@ -35,8 +38,29 @@
                     }
                 }
             }
+            // fonction like en liens avec la page like-fonction.php
+            $nombreVote = 0;
+            $leVote = 0;
+            $couleurOn = " ";
+            if(isset($votes) && !empty($votes)){
+                foreach($votes as $vote){
+                    if($idQuestion == $vote['#Id_question']){
+                        $nombreVote = $nombreVote + 1;
+                    }
+                }
+                foreach($votes as $vote){
+                    if($idQuestion == $vote['#Id_question'] && $_SESSION['utilisateur']['id'] == $vote['#Id_profil']){
+                        $leVote = $vote['Action_vote'];
+                        $couleurOn = " like-on";
+                    }
+                }
+                $leVote = $leVote + 1;
+            }else{
+                $leVote = 1;
+            }
         }
 ?>
+        <?php //affichage de la question selectionné ?>
         <div class="container">
             <div class="row">
                 <div class="question">
@@ -59,13 +83,16 @@
                         </div>
                         <div class="divider"></div>
                         <div class="footer-question">
-                            <i class="far fa-heart"></i><span>compteur like</span>       
+                            <button type="button" class="btn-like" onclick="window.location.href = './like-fonction.php?vote=<?php echo $leVote?>&amp;id_question=<?php echo $idQuestion?>&amp;ad=<?php echo $adresse?>';">
+                                <i class="far fa-heart<?php echo $couleurOn?>"></i>
+                            </button>
+                            <span><?php echo $nombreVote?></span>        
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <?php //ajout d'une réponse à la question selectionné ?>
         <div class="container formulaire-reponse">
             <form action="#" method="POST" id="myForm">
                 <div class="form-row">
@@ -104,7 +131,8 @@
             }
         ?>
             <div class="container">
-            <?php foreach ($reponses as $reponse){ ?>
+            <?php // affichage de l'ensemble des réponses de la question selectionné
+                foreach ($reponses as $reponse){ ?>
                 <?php if (($reponse['#unique_key'] == $uniqueKey)){?>
                     <div class="row">
                         <div class="reponse">
@@ -134,6 +162,7 @@
         </div>
     <?php }?>
     <script>
+        //fonction effet rafraichissement page (redirection vers la page actuelle)
         function reload($nbe){
             if($nbe == 1){
                 document.location.href="page-perso-question.php?id=<?php echo $_GET['id']?>";

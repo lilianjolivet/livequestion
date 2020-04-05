@@ -6,7 +6,8 @@
     $questions = recupQuestion();
     $profils = recupProfil();
 ?>
-<?php if(isset($questions) && !empty($questions) && isset($profils) && !empty($profils)){?>
+<?php // affichage de l'ensemble des questions des profils
+    if(isset($questions) && !empty($questions) && isset($profils) && !empty($profils)){?>
     <table class="table table-striped">
         <thead>
             <tr class="admin">
@@ -30,7 +31,7 @@
                     ?>
                 </td>
                 <td>
-                    <button type="button" class="close cross-btn" aria-label="Close" onclick="window.location.href = './db/req_supp_sql.php?id=<?php echo $question['Id_question']?>';">
+                    <button type="button" class="close cross-btn" aria-label="Close" onclick="window.location.href = './db/req_supp_sql.php?id_supp_question=<?php echo $question['Id_question']?>';">
                         <span aria-hidden="true">&times;</span>
                     </button> 
                 </td>
