@@ -1,5 +1,5 @@
 <?php 
-    require_once('./db/db.php');
+    require('db.php');
 
     // récupération données question 
     function recupQuestion(){
