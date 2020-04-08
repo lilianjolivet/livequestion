@@ -4,7 +4,6 @@
 <body class="bodyForm">
     <?php
     require_once('./db/req_sql.php');
-    $profils = recupProfil();
 
     require_once('./traitement/traitement_formulaire.php');
         if(!empty($_POST)){
@@ -44,16 +43,18 @@
     </form>
     <?php 
     if(isset($_POST) && !empty($_POST)){
-        foreach($profils as $profil){
-            if(($profil['Pseudo_profil'] == $_POST['identifiant']) && (password_verify($_POST['password'],$profil['MotDePasse_profil']))){
+        $leProfil = recupLeProfilConnexion($_POST);
+            if(isset($leProfil) && !empty($leProfil) && password_verify($_POST['password'],$leProfil[0]['MotDePasse_profil'])){
                 $_SESSION['utilisateur']=[
-                    'pseudo' => $profil['Pseudo_profil'],
-                    'id' => $profil['Id_profil'],
-                    'role' => $profil['#Id_role']
+                    'pseudo' => $leProfil[0]['Pseudo_profil'],
+                    'id' => $leProfil[0]['Id_profil'],
+                    'role' => $leProfil[0]['#Id_role']
                 ];
                 header("Location: ./home.php");
             }
-        }
+            else {
+                echo '<span class="erreur">identifiant ou mot de passe incorrect</span>';
+            }
     }
     ?>
 <?php require_once('./require/footer.php')?>

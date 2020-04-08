@@ -43,7 +43,7 @@
             <input type="hidden" name="date" value="
                 <?php
                 date_default_timezone_set('Europe/Paris');
-                $dateTime = new DateTime;
+                $dateTime = new DateTime();
                 echo $dateTime->format('Y-m-d H:i:s');
                 ?>
             "> 
@@ -67,27 +67,4 @@ if(!empty($_POST['question']) && strlen($_POST['question'])<= 255){
     }
 </script>
 <script>reload(<?php echo $refresh?>);</script>
-<?php require_once('./require/footer.php')?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <?php require_once('./require/footer.php')?>

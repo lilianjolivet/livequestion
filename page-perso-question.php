@@ -19,45 +19,43 @@
     // recuperation données de la question choisi
     if(isset($_GET['id']) && !empty($_GET['id'])){
         $idQuestion = $_GET['id'];
-        foreach($questions as $question){
-            if($idQuestion == $question['Id_question']){
-                $uniqueKey = $question['unique_key'];
-                $dateQuestion = $question['Date_creation_question'];
-                $titreQuestion = $question['Titre_question'];
-                foreach($profils as $profil){
-                    if($question['#Id_profil'] == $profil['Id_profil']){ 
-                        $pseudo =  $profil['Pseudo_profil'];
-                        $idProfil = $profil['Id_profil'];
-                        $avatar = $profil['avatar'];
-                    }
+
+        $laQuestion = recupLaQuestion($idQuestion);
+        $leProfil = recupLeProfil($laQuestion[0]['#Id_profil']);
+        
+        $titreQuestion = $laQuestion[0]['Titre_question'];
+        $uniqueKey = $laQuestion[0]['unique_key'];
+        $dateQuestion = $laQuestion[0]['Date_creation_question'];
+        $titreQuestion = $laQuestion[0]['Titre_question'];
+
+        $pseudo = $leProfil[0]['Pseudo_profil'];
+        $idProfil = $leProfil[0]['Id_profil'];
+        $avatar = $leProfil[0]['avatar'];
+
+        $nombreReponse = 0;
+        foreach($reponses as $reponse){
+            if($uniqueKey == $reponse['#unique_key']){
+                $nombreReponse = $nombreReponse + 1;
+            }
+        }
+        // fonction like en liens avec la page like-fonction.php
+        $nombreVote = 0;
+        $leVote = 0;
+        $couleurOn = " ";
+        if(isset($votes) && !empty($votes)){
+            foreach($votes as $vote){
+                if($idQuestion == $vote['#Id_question']){
+                    $nombreVote = $nombreVote + 1;
                 }
-                $nombreReponse = 0;
-                foreach($reponses as $reponse){
-                    if($uniqueKey == $reponse['#unique_key']){
-                        $nombreReponse = $nombreReponse + 1;
-                    }
+                if($idQuestion == $vote['#Id_question'] && $_SESSION['utilisateur']['id'] == $vote['#Id_profil']){
+                    $leVote = $vote['Action_vote'];
+                    $couleurOn = "fas fa-heart like-on";
                 }
             }
-            // fonction like en liens avec la page like-fonction.php
-            $nombreVote = 0;
-            $leVote = 0;
-            $couleurOn = " ";
-            if(isset($votes) && !empty($votes)){
-                foreach($votes as $vote){
-                    if($idQuestion == $vote['#Id_question']){
-                        $nombreVote = $nombreVote + 1;
-                    }
-                }
-                foreach($votes as $vote){
-                    if($idQuestion == $vote['#Id_question'] && $_SESSION['utilisateur']['id'] == $vote['#Id_profil']){
-                        $leVote = $vote['Action_vote'];
-                        $couleurOn = " like-on";
-                    }
-                }
-                $leVote = $leVote + 1;
-            }else{
-                $leVote = 1;
-            }
+            $leVote = $leVote + 1;
+        }else{
+            $leVote = 1;
+            $couleurOn = "far fa-heart";
         }
 ?>
         <?php //affichage de la question selectionné ?>
@@ -84,7 +82,7 @@
                         <div class="divider"></div>
                         <div class="footer-question">
                             <button type="button" class="btn-like" onclick="window.location.href = './like-fonction.php?vote=<?php echo $leVote?>&amp;id_question=<?php echo $idQuestion?>&amp;ad=<?php echo $adresse?>';">
-                                <i class="far fa-heart<?php echo $couleurOn?>"></i>
+                                <i class="<?php echo $couleurOn?>"></i>
                             </button>
                             <span><?php echo $nombreVote?></span>        
                         </div>
@@ -112,7 +110,7 @@
                     <input type="hidden" name="date" value="
                         <?php 
                             date_default_timezone_set('Europe/Paris');
-                            $dateTime = new DateTime;
+                            $dateTime = new DateTime();
                             echo $dateTime->format('Y-m-d H:i:s');
                         ?>
                     ">

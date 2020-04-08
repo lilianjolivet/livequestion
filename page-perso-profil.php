@@ -5,6 +5,8 @@
     require_once('./traitement/traitement_formulaire.php');
     
     $profils = recupProfil();
+    $leProfil = recupLeProfil($_SESSION['utilisateur']['id']);
+    $avatar = $leProfil[0]['avatar'];
 
     // traitement du formaulaire
     if (!empty($_POST)) {
@@ -13,7 +15,7 @@
 ?>
 <?php
     //ajout d'une photo de profil
-	if(isset($_FILES['avatar']) AND !empty($_FILES['avatar']['name'])) {
+	if(isset($_FILES['avatar']) && !empty($_FILES['avatar']['name'])) {
 	   $tailleMax = 2097152;
 	   $extensionsValides = ['jpg', 'jpeg', 'gif', 'png'];
 	   if($_FILES['avatar']['size'] <= $tailleMax) {
@@ -37,13 +39,6 @@
 	      $msg = "Votre photo de profil ne doit pas dépasser 2Mo";
 	   }
 	}
-?>
-<?php 
-    foreach($profils as $profil){
-        if($_SESSION['utilisateur']['id'] == $profil['Id_profil']){
-            $avatar = $profil['avatar'];
-        }
-    }
 ?>
 <div class="form-profil">
     <div class="container shadow p-3 mb-5 bg-white rounded">
@@ -115,4 +110,14 @@
         
     }
 ?>
+<script>
+//fonction effet rafraichissement page (redirection vers la page actuelle)
+function reload($nbe){
+    if($nbe == 1){
+        document.location.href="page-perso-quesion.php";
+    } 
+}
+</script>
+<script>reload(<?php echo $answer?>);</script>
+<?php require_once('./require/footer.php')?>
 

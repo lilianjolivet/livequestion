@@ -1,12 +1,9 @@
 <?php
     require_once('./db/req_sql.php');
 
-    $profils = recupProfil();
-    foreach($profils as $profil){
-        if($_SESSION['utilisateur']['id'] == $profil['Id_profil']){
-            $avatar = $profil['avatar'];
-        }
-    }
+    $leProfil = recupLeProfil($_SESSION['utilisateur']['id']);
+    $avatar = $leProfil[0]['avatar'];
+    
 ?>
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">

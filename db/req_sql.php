@@ -1,7 +1,11 @@
 <?php 
     require_once('db.php');
 
-    // récupération données question 
+
+    ///=======///
+    /// QUESTION ///
+    ///=======///
+    // récupération données table question 
     function recupQuestion(){
         $connexion = connexionBdd();
 
@@ -10,8 +14,22 @@
         $questions = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $questions;
     }
+    // récupération données d'une question
+    function recupLaQuestion($info){
+        $connexion = connexionBdd();
 
-    // récupération données réponse
+        $requete = $connexion->prepare("SELECT * FROM `question` WHERE `Id_question` = :Id_question");
+        $requete->bindParam(':Id_question', $idQuestion);
+        $idQuestion = $info;
+        $requete->execute();
+        $laQuestion = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        return $laQuestion;
+    }
+
+    ///=======///
+    /// REPONSE ///
+    ///=======///
+    // récupération données table réponse
     function recupReponse(){
         $connexion = connexionBdd();
 
@@ -21,7 +39,10 @@
         return $reponses;
     }
 
-    // récupération données profil
+    ///=======///
+    /// PROFIL ///
+    ///=======///
+    // récupération données table profil
     function recupProfil(){
         $connexion = connexionBdd();
 
@@ -30,8 +51,33 @@
         $profils = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $profils;
     }
+    // récupération donnée d'un profil 
+    function recupLeProfil($info){
+        $connexion = connexionBdd();
 
-    // récupération données catégorie
+        $requete = $connexion->prepare("SELECT * FROM `profil` WHERE `Id_profil` = :Id_profil");
+        $requete->bindParam(':Id_profil', $idProfil);
+        $idProfil = $info;
+        $requete->execute();
+        $leProfil = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        return $leProfil;
+    }
+    // récupération donnée d'un profil connexion/vérification
+    function recupLeProfilConnexion(array $info){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare("SELECT * FROM `profil` WHERE `Pseudo_profil` = :Pseudo_profil");
+        $requete->bindParam(':Pseudo_profil', $pseudo);
+        $pseudo = $info['identifiant'];
+        $requete->execute();
+        $leProfil = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        return $leProfil;
+    }
+
+    ///=======///
+    /// CATEGORIE ///
+    ///=======///
+    // récupération données table catégorie
     function recupCateg(){
         $connexion = connexionBdd();
 
@@ -41,7 +87,10 @@
         return $categories;
     }
 
-    // récupération données vote
+    ///=======///
+    /// VOTE ///
+    ///=======///
+    // récupération données table vote
     function recupVote(){
         $connexion = connexionBdd();
 
@@ -50,6 +99,10 @@
         $votes = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $votes;
     }
+
+    ///=======///
+    /// INSERTION ///
+    ///=======////
 
     // requête insertion BDD d'une question
     function insertQuestion(array $info){
@@ -119,6 +172,10 @@
         $requete->execute();
     }
 
+    ///=======///
+    /// MODIFICATION ///
+    ///=======////
+
     // requête modification BDD d'un profil
     function modifProfil(array $info){
         $connexion = connexionBdd();
@@ -155,7 +212,5 @@
             $idProfil = $_SESSION['utilisateur']['id'];
             $requete->execute();
         }
-        header('Location: ./page-perso-profil.php');
     }
 ?>
-

@@ -4,7 +4,7 @@
     require_once('./db/req_supp_sql.php');
     
     // traitement des likes et des unlikes 
-    if(isset($_GET['vote']) && !empty($_GET['vote'])){
+    if(!empty($_GET['vote'])){
         //données pour le vote
         $id = $_SESSION['utilisateur']['id'];
         $vote = $_GET['vote'];

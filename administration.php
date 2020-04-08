@@ -40,3 +40,4 @@
         </tbody>
     </table>
 <?php }?>
+<?php require_once('./require/footer.php')?>

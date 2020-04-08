@@ -61,21 +61,20 @@
                                 if($question['Id_question'] == $vote['#Id_question']){
                                     $nombreVote = $nombreVote + 1;
                                 }
-                            }
-                            foreach($votes as $vote){
                                 if($question['Id_question'] == $vote['#Id_question'] && $_SESSION['utilisateur']['id'] == $vote['#Id_profil']){
                                     $leVote = $vote['Action_vote'];
-                                    $couleurOn = " like-on";
+                                    $couleurOn = "fas fa-heart like-on";
                                 }
                             }
                             $leVote = $leVote + 1;
                         }else{
                             $leVote = 1;
+                            $couleurOn = "far fa-heart";
                         }
                         $adresse = 'affichage-question';
                         ?>
                             <button type="button" class="btn-like" onclick="window.location.href = './like-fonction.php?vote=<?php echo $leVote?>&amp;id_question=<?php echo $question['Id_question']?>&amp;ad=<?php echo $adresse?>';">
-                                <i class="far fa-heart<?php echo $couleurOn?>"></i>
+                                <i class="<?php echo $couleurOn?>"></i>
                             </button>
                             <span><?php echo $nombreVote?></span> 
                         </div>
