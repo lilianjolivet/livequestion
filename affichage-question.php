@@ -69,12 +69,16 @@
                             $leVote = $leVote + 1;
                         }else{
                             $leVote = 1;
-                            $couleurOn = "far fa-heart";
                         }
                         $adresse = 'affichage-question';
                         ?>
                             <button type="button" class="btn-like" onclick="window.location.href = './like-fonction.php?vote=<?php echo $leVote?>&amp;id_question=<?php echo $question['Id_question']?>&amp;ad=<?php echo $adresse?>';">
-                                <i class="<?php echo $couleurOn?>"></i>
+                                <i class="<?php 
+                                    if($leVote == 1){
+                                        $couleurOn = "far fa-heart";
+                                    }
+                                    echo $couleurOn;
+                                ?>"></i>
                             </button>
                             <span><?php echo $nombreVote?></span> 
                         </div>
