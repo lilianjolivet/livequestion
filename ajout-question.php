@@ -61,7 +61,7 @@ if(!empty($_POST['question']) && strlen($_POST['question'])<= 255){
 ?>
 <script>
     function reload($nbe){
-        if($nbe == 1){
+        if($nbe === 1){
             document.location.href="./home.php";
         } 
     }

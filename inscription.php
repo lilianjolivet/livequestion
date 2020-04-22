@@ -92,7 +92,7 @@
     if(isset($_POST) && !empty($_POST)){
         $answer = 1;
         foreach($profils as $profil){
-            if(($profil['Pseudo_profil'])==($_POST['identifiant'])){
+            if(($profil['Pseudo_profil'])===($_POST['identifiant'])){
                 echo '<span class="erreur">Identifiant déjà utiliser</span>';
                 $answer = 0;
             }
@@ -103,7 +103,7 @@
         if(($_POST['password'])!=($_POST['password-verif'])){
             $answer = 0;
         }
-        if(($answer == 1)){
+        if(($answer === 1)){
             $_POST['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT);
             ajoutProfil($_POST);
             header("Location: ./index.php");

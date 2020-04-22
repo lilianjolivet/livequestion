@@ -24,7 +24,7 @@
                 <td>
                     <?php
                         foreach($profils as $profil){
-                            if($question['#Id_profil'] == $profil['Id_profil']){
+                            if($question['#Id_profil'] === $profil['Id_profil']){
                                 echo $profil['Pseudo_profil'];
                             }
                         }

@@ -20,7 +20,7 @@
             <?php echo $leProfil[0]['Pseudo_profil'].', '.$leProfil[0]['Genre_profil'];?>
         </h2>
         <?php foreach($questions as $question){ ?>
-            <?php if($question['#Id_profil'] == $idProfil){?>
+            <?php if($question['#Id_profil'] === $idProfil){?>
                 <div class="row">
                     <div class="question">
                         <div class="info-question">
@@ -30,7 +30,7 @@
                                     <?php 
                                         $nombreReponse = 0;
                                         foreach($reponses as $reponse){
-                                            if($question['unique_key'] == $reponse['#unique_key']){
+                                            if($question['unique_key'] === $reponse['#unique_key']){
                                                 $nombreReponse = $nombreReponse + 1;
                                             }
                                         }
@@ -58,10 +58,10 @@
                             $couleurOn = " ";
                             if(isset($votes) && !empty($votes)){
                                 foreach($votes as $vote){
-                                    if($question['Id_question'] == $vote['#Id_question']){
+                                    if($question['Id_question'] === $vote['#Id_question']){
                                         $nombreVote = $nombreVote + 1;
                                     }
-                                    if($question['Id_question'] == $vote['#Id_question'] && $_SESSION['utilisateur']['id'] == $vote['#Id_profil']){
+                                    if($question['Id_question'] === $vote['#Id_question'] && $_SESSION['utilisateur']['id'] === $vote['#Id_profil']){
                                         $leVote = $vote['Action_vote'];
                                         $couleurOn = "fas fa-heart like-on";
                                     }
@@ -74,7 +74,7 @@
                             ?>
                                 <button type="button" class="btn-like" onclick="window.location.href = './like-fonction.php?vote=<?php echo $leVote?>&amp;id_question=<?php echo $question['Id_question']?>&amp;ad=<?php echo $adresse?>&amp;id_profil_question=<?php echo $idProfil?>';">
                                     <i class="<?php 
-                                    if($leVote == 1){
+                                    if($leVote === 1){
                                         $couleurOn = "far fa-heart";
                                     }
                                     echo $couleurOn;

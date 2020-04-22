@@ -19,15 +19,15 @@ $idSupp = $_GET['id_supp'];
 
 if(isset($idSupp)&&!empty($idSupp)){
     foreach($questions as $question){
-        if($idSupp == $question['#Id_profil']){
+        if($idSupp === $question['#Id_profil']){
             foreach($reponses as $reponse){
-                if($question['Id_question'] == $reponse['#Id_question']){
+                if($question['Id_question'] === $reponse['#Id_question']){
                     suppReponse($reponse['#Id_question']);
                 }
                 suppReponseProfil($idSupp);
             }
             foreach($votes as $vote){
-                if($idSupp == $vote['#Id_profil']){
+                if($idSupp === $vote['#Id_profil']){
                     suppVoteProfil($idSupp);
                 }
             }
@@ -36,12 +36,12 @@ if(isset($idSupp)&&!empty($idSupp)){
     }
     //si le profil n'avait pas ajouter de question
     foreach($reponses as $reponse){
-        if($idSupp == $reponse['#Id_profil']){
+        if($idSupp === $reponse['#Id_profil']){
             suppReponseProfil($idSupp);
         }
     }
     foreach($votes as $vote){
-        if($idSupp == $vote['#Id_profil']){
+        if($idSupp === $vote['#Id_profil']){
             suppVoteProfil($idSupp);
         }
     }

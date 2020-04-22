@@ -44,10 +44,10 @@
         $couleurOn = " ";
         if(isset($votes) && !empty($votes)){
             foreach($votes as $vote){
-                if($idQuestion == $vote['#Id_question']){
+                if($idQuestion === $vote['#Id_question']){
                     $nombreVote = $nombreVote + 1;
                 }
-                if($idQuestion == $vote['#Id_question'] && $_SESSION['utilisateur']['id'] == $vote['#Id_profil']){
+                if($idQuestion === $vote['#Id_question'] && $_SESSION['utilisateur']['id'] == $vote['#Id_profil']){
                     $leVote = $vote['Action_vote'];
                     $couleurOn = "fas fa-heart like-on";
                 }
@@ -82,7 +82,7 @@
                         <div class="footer-question">
                             <button type="button" class="btn-like" onclick="window.location.href = './like-fonction.php?vote=<?php echo $leVote?>&amp;id_question=<?php echo $idQuestion?>&amp;ad=<?php echo $adresse?>';">
                                 <i class="<?php 
-                                if($leVote == 1){
+                                if($leVote === 1){
                                     $couleurOn = "far fa-heart";
                                 }
                                 echo $couleurOn;
@@ -135,13 +135,13 @@
             <div class="container">
             <?php // affichage de l'ensemble des réponses de la question selectionné
                 foreach ($reponses as $reponse){ ?>
-                <?php if (($reponse['#unique_key'] == $uniqueKey)){?>
+                <?php if (($reponse['#unique_key'] === $uniqueKey)){?>
                     <div class="row">
                         <div class="reponse">
                             <div class="info-reponse">
                                 <div class="heading-reponse">
                                 <?php foreach($profils as $profil){?>
-                                    <?php if($reponse['#Id_profil'] == $profil['Id_profil']){ ?>
+                                    <?php if($reponse['#Id_profil'] === $profil['Id_profil']){ ?>
                                             <img src="./images/avatars/<?php echo $profil['avatar']?>" alt="<?php echo $profil['avatar']?>" class="rounded avatar-option">
                                             <p><a href=""><?php echo $profil['Pseudo_profil']?></a></p>
                                     <?php }?>
@@ -166,7 +166,7 @@
     <script>
         //fonction effet rafraichissement page (redirection vers la page actuelle)
         function reload($nbe){
-            if($nbe == 1){
+            if($nbe === 1){
                 document.location.href="page-perso-question.php?id=<?php echo $_GET['id']?>";
             } 
         }

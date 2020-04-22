@@ -16,9 +16,14 @@
 <?php
     //ajout d'une photo de profil
 	if(isset($_FILES['avatar']) && !empty($_FILES['avatar']['name'])) {
-	   $tailleMax = 2097152;
+       $tailleMax = 2097152;
+       $resolutionMax = [
+           'width' => 200,
+           'height' => 200,
+       ];
+       $resoImg = @getimagesize($_FILES['avatar']['tmp_name']);
 	   $extensionsValides = ['jpg', 'jpeg', 'gif', 'png'];
-	   if($_FILES['avatar']['size'] <= $tailleMax) {
+	   if(($_FILES['avatar']['size'] <= $tailleMax)&&($resoImg[0] <= $resolutionMax['width'] && $resoImg[1] <= $resolutionMax['height'])) {
 	      $extensionUpload = strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1));
 	      if(in_array($extensionUpload, $extensionsValides)) {
 	         $chemin = "./images/avatars/".$_SESSION['utilisateur']['id'].".".$extensionUpload;
@@ -36,7 +41,7 @@
 	         $msg = "Votre photo de profil doit être au format jpg, jpeg, gif ou png";
 	      }
 	   } else {
-	      $msg = "Votre photo de profil ne doit pas dépasser 2Mo";
+	      $msg = "Votre photo de profil ne doit pas dépasser 2Mo et faire 200x200";
 	   }
 	}
 ?>
@@ -49,7 +54,9 @@
                 <input type="file" class="form-control-file" id="avatar" name="avatar">
                 <span class="erreur col-md-12">
                     <?php
+                    $answer = 1;
                     if (isset($msg) && !empty($msg)) {
+                        $answer = 0;
                         echo $msg;
                     }
                     ?>
@@ -78,46 +85,34 @@
             <div class="form-group text-center">
                 <button type="submit" class="btn btn-primary ">valider</button>
             </div>
+            <?php
+                if(isset($_POST)&&!empty($_POST)){
+                    if(isset($_POST['identifiant']) && !empty($_POST['identifiant'])){
+                        foreach($profils as $profil){
+                            if(($profil['Pseudo_profil'])===($_POST['identifiant'])){
+                                echo '<span class="erreur">Identifiant déjà utiliser</span>';
+                                $answer = 0;
+                            }
+                        }
+                    }
+                    if(isset($_POST['email']) && !empty($_POST['email'])){
+                        foreach($profils as $profil){
+                            if(($profil['Mail_profil'])===($_POST['email'])){
+                                echo '<span class="erreur">email déjà utiliser</span>';
+                                $answer = 0;
+                            }
+                        }
+                    }
+                    if(isset($_POST['password']) && !empty($_POST['password'])){
+                        $_POST['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT);
+                    }
+                    if($answer == 1){
+                        modifProfil($_POST);
+                    } 
+                }
+            ?>
         </form>
     </div>
 </div>
-<?php
-    if(isset($_POST)&&!empty($_POST)){
-        $answer = 1;
-        if(isset($_POST['identifiant']) && !empty($_POST['identifiant'])){
-            foreach($profils as $profil){
-                if(($profil['Pseudo_profil'])==($_POST['identifiant'])){
-                    echo '<span class="erreur">Identifiant déjà utiliser</span>';
-                    $answer = 0;
-                }
-            }
-        }
-        if(isset($_POST['email']) && !empty($_POST['email'])){
-            foreach($profils as $profil){
-                if(($profil['Mail_profil'])==($_POST['email'])){
-                    echo '<span class="erreur">email déjà utiliser</span>';
-                    $answer = 0;
-                }
-            }
-        }
-        if(isset($_POST['password']) && !empty($_POST['password'])){
-            var_dump($_POST['password']);
-            $_POST['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT);
-        }
-        if($answer == 1){
-            modifProfil($_POST);
-        }
-        
-    }
-?>
-<script>
-//fonction effet rafraichissement page (redirection vers la page actuelle)
-function reload($nbe){
-    if($nbe == 1){
-        document.location.href="page-perso-quesion.php";
-    } 
-}
-</script>
-<script>reload(<?php echo $answer?>);</script>
 <?php require_once('./require/footer.php')?>
 

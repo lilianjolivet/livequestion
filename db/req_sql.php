@@ -212,5 +212,10 @@
             $idProfil = $_SESSION['utilisateur']['id'];
             $requete->execute();
         }
+        ?>
+        <script>
+            document.location.href="page-perso-profil.php";
+        </script>
+        <?php
     }
 ?>
