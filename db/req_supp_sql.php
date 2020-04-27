@@ -1,9 +1,9 @@
 <?php
     require_once('req_sql.php');
-    $questions = recupQuestion();
-    $profils = recupProfil();
-    $reponses = recupReponse();
-    $votes = recupVote();
+    $questions = recupQuestions();
+    $profils = recupProfils();
+    $reponses = recupReponses();
+    $votes = recupVotes();
 
 //suppression de la question avec ses réponses et ses votes
 if(isset($_GET['id_supp_question']) && !empty($_GET['id_supp_question'])){

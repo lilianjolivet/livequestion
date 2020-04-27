@@ -1,10 +1,10 @@
 <?php
     require_once('./db/req_sql.php');
-    $questions = recupQuestion();
-    $profils = recupProfil();
-    $categories = recupCateg();
-    $reponses = recupReponse();
-    $votes = recupVote();
+    $questions = recupQuestions();
+    $profils = recupProfils();
+    $categories = recupCategs();
+    $reponses = recupReponses();
+    $votes = recupVotes();
 
 ?>
 <!-- affichage de l'ensemble des questions -->

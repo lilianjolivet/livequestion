@@ -6,7 +6,7 @@
     /// QUESTION ///
     ///=======///
     // récupération données table question 
-    function recupQuestion(){
+    function recupQuestions(){
         $connexion = connexionBdd();
 
         $requete = $connexion->prepare("SELECT * FROM `question` ORDER BY `Date_creation_question` DESC");
@@ -30,7 +30,7 @@
     /// REPONSE ///
     ///=======///
     // récupération données table réponse
-    function recupReponse(){
+    function recupReponses(){
         $connexion = connexionBdd();
 
         $requete = $connexion->prepare("SELECT * FROM reponse ORDER BY `Date_reponse` DESC");
@@ -43,7 +43,7 @@
     /// PROFIL ///
     ///=======///
     // récupération données table profil
-    function recupProfil(){
+    function recupProfils(){
         $connexion = connexionBdd();
 
         $requete = $connexion->prepare("SELECT * FROM `profil`");
@@ -78,7 +78,7 @@
     /// CATEGORIE ///
     ///=======///
     // récupération données table catégorie
-    function recupCateg(){
+    function recupCategs(){
         $connexion = connexionBdd();
 
         $requete = $connexion->prepare("SELECT * FROM `categorie`");
@@ -91,7 +91,7 @@
     /// VOTE ///
     ///=======///
     // récupération données table vote
-    function recupVote(){
+    function recupVotes(){
         $connexion = connexionBdd();
 
         $requete = $connexion->prepare("SELECT * FROM `vote`");

@@ -4,7 +4,7 @@
     require_once('./db/req_sql.php');
     require_once('./traitement/traitement_formulaire.php');
     
-    $profils = recupProfil();
+    $profils = recupProfils();
     $leProfil = recupLeProfil($_SESSION['utilisateur']['id']);
     $avatar = $leProfil[0]['avatar'];
 

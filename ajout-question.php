@@ -4,7 +4,7 @@
     require_once('./db/req_sql.php');
     require_once('./traitement/traitement_formulaire.php');
 
-    $categories = recupCateg();
+    $categories = recupCategs();
 
     // traitement du formaulaire
     if (!empty($_POST)) {

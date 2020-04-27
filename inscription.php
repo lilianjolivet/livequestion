@@ -5,7 +5,7 @@
 <body class="bodyForm">
     <?php
     require_once('./db/req_sql.php');
-    $profils = recupProfil();
+    $profils = recupProfils();
 
     require_once('./traitement/traitement_formulaire.php');
     if(!empty($_POST)){

@@ -2,8 +2,10 @@
     require_once('./require/header.php');
     require_once('./require/nav.php');
     require_once('./db/req_sql.php');
-
-    $questions = recupQuestion();
+    if($_SESSION['utilisateur']['role'] != 2){
+        header("Location: ./home.php");
+    }
+    $questions = recupQuestions();
     $profils = recupProfil();
 ?>
 <?php // affichage de l'ensemble des questions des profils

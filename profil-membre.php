@@ -3,10 +3,10 @@
     require_once('./require/nav.php');
     require_once('./db/req_sql.php');
     require_once('./traitement/traitement_formulaire.php');
-    $questions = recupQuestion();
-    $categories = recupCateg();
-    $reponses = recupReponse();
-    $votes = recupVote();
+    $questions = recupQuestions();
+    $categories = recupCategs();
+    $reponses = recupReponses();
+    $votes = recupVotes();
 
     if(isset($_GET['id']) && !empty($_GET['id'])){
         $idProfil = $_GET['id'];

@@ -3,11 +3,11 @@
     require_once('./require/nav.php');
     require_once('./db/req_sql.php');
     require_once('./traitement/traitement_formulaire.php');
-    $questions = recupQuestion();
-    $reponses = recupReponse();
-    $profils = recupProfil();
-    $categories = recupCateg();
-    $votes = recupVote();
+    $questions = recupQuestions();
+    $reponses = recupReponses();
+    $profils = recupProfils();
+    $categories = recupCategs();
+    $votes = recupVotes();
 
     $adresse = 'page-perso-question';
 
@@ -143,7 +143,8 @@
                                 <?php foreach($profils as $profil){?>
                                     <?php if($reponse['#Id_profil'] === $profil['Id_profil']){ ?>
                                             <img src="./images/avatars/<?php echo $profil['avatar']?>" alt="<?php echo $profil['avatar']?>" class="rounded avatar-option">
-                                            <p><a href=""><?php echo $profil['Pseudo_profil']?></a></p>
+                                            <p><a href="profil-membre.php?
+                                            id=<?php echo $profil['Id_profil']?>"><?php echo $profil['Pseudo_profil']?></a></p>
                                     <?php }?>
                                 <?php }?>
                                     <p><i class="far fa-clock"></i><?php echo $reponse['Date_reponse']?></p>
