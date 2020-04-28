@@ -25,9 +25,9 @@ Ce projet est à la version 1.0
 
 Participant avec nom Github:
 
-Laura Gonçalves nom GitHub 
-Lucas Boganin nom GitHub 
-Lilian Jolivet nom GitHub 
+Laura Gonçalves nom GitHub lauraagss
+Lucas Boganin nom GitHub Spacelocust
+Lilian Jolivet nom GitHub lilianjolivet
 
 
 
