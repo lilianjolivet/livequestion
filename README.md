@@ -10,7 +10,7 @@ LiveQuestion
 
 Contexte :
 
-Développement d’un site type Live Question un site de question réponse. Ce site doit permettre de s’inscrire, se connecter. Il doit aussi permettre à l’utilisateur de poser des questions et de répondre à celle des autres utilisateurs mais aussi de se désinscrire gérer son profil ou encore liker les questions ou réponses des autres utilisateurs. Enfin le site se doit de contenir un espace administrateur qui peut supprimer une question ou une réponse. 
+Développement d’un site type Live Question un site de question réponse. Ce site doit permettre de s’inscrire, se connecter. Il doit aussi permettre à l’utilisateur de poser des questions et de répondre à celle des autres utilisateurs mais aussi de se désinscrire gérer son profil ou encore liker les questions ou réponses des autres utilisateurs. Enfin le site se doit de contenir un espace administrateur qui peut supprimer une question. 
 
 Installation : 
 
