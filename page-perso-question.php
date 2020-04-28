@@ -80,7 +80,7 @@
                         </div>
                         <div class="divider"></div>
                         <div class="footer-question">
-                            <button type="button" class="btn-like" onclick="window.location.href = './like-fonction.php?vote=<?php echo $leVote?>&amp;id_question=<?php echo $idQuestion?>&amp;ad=<?php echo $adresse?>';">
+                            <button type="button" class="btn-like" onclick="window.location.href = './traitement/like-fonction.php?vote=<?php echo $leVote?>&amp;id_question=<?php echo $idQuestion?>&amp;ad=<?php echo $adresse?>';">
                                 <i class="<?php 
                                 if($leVote === 1){
                                     $couleurOn = "far fa-heart";

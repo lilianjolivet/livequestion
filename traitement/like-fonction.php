@@ -1,7 +1,7 @@
 <?php
     session_start();
-    require_once('./db/req_sql.php');
-    require_once('./db/req_supp_sql.php');
+    require_once('../db/req_sql.php');
+    require_once('../db/req_supp_sql.php');
     
     // traitement des likes et des unlikes 
     if(!empty($_GET['vote'])){
@@ -22,13 +22,13 @@
        
         switch($adresse){
             case'affichage-question':
-                $adresse = 'Location: ./home.php';
+                $adresse = 'Location: ../home.php';
                 break;
             case'profil-membre':
-                $adresse = 'Location: ./profil-membre.php?id='.$idProfilQuestion;
+                $adresse = 'Location: ../profil-membre.php?id='.$idProfilQuestion;
                 break;
             case'page-perso-question':
-                $adresse = 'Location: ./page-perso-question.php?id='.$idQuestion;
+                $adresse = 'Location: ../page-perso-question.php?id='.$idQuestion;
                 break;
         }
         switch($vote){

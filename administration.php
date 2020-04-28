@@ -6,7 +6,7 @@
         header("Location: ./home.php");
     }
     $questions = recupQuestions();
-    $profils = recupProfil();
+    $profils = recupProfils();
 ?>
 <?php // affichage de l'ensemble des questions des profils
     if(isset($questions) && !empty($questions) && isset($profils) && !empty($profils)){?>
