@@ -3,11 +3,8 @@
     require_once('./require/nav.php');
     require_once('./db/req_sql.php');
     require_once('./traitement/traitement_formulaire.php');
-    $questions = recupQuestions();
     $reponses = recupReponses();
     $profils = recupProfils();
-    $categories = recupCategs();
-    $votes = recupVotes();
 
     $adresse = 'page-perso-question';
 
@@ -22,7 +19,8 @@
 
         $laQuestion = recupLaQuestion($idQuestion);
         $leProfil = recupLeProfil($laQuestion[0]['#Id_profil']);
-        
+        $nombreReponse = calculeReponseQuestion($laQuestion[0]['Id_question']);
+
         $titreQuestion = $laQuestion[0]['Titre_question'];
         $uniqueKey = $laQuestion[0]['unique_key'];
         $dateQuestion = $laQuestion[0]['Date_creation_question'];
@@ -31,23 +29,15 @@
         $pseudo = $leProfil[0]['Pseudo_profil'];
         $idProfil = $leProfil[0]['Id_profil'];
         $avatar = $leProfil[0]['avatar'];
-
-        $nombreReponse = 0;
-        foreach($reponses as $reponse){
-            if($uniqueKey == $reponse['#unique_key']){
-                $nombreReponse = $nombreReponse + 1;
-            }
-        }
+     
         // fonction like en liens avec la page like-fonction.php
-        $nombreVote = 0;
         $leVote = 0;
         $couleurOn = " ";
-        if(isset($votes) && !empty($votes)){
-            foreach($votes as $vote){
-                if($idQuestion === $vote['#Id_question']){
-                    $nombreVote = $nombreVote + 1;
-                }
-                if($idQuestion === $vote['#Id_question'] && $_SESSION['utilisateur']['id'] == $vote['#Id_profil']){
+        $nombreVote = calculeVoteQuestion($laQuestion[0]['Id_question'] );
+        $lesVotes = recupVotesQuestion($laQuestion[0]['Id_question'] );
+        if(isset($lesVotes) && !empty($lesVotes)){
+            foreach($lesVotes as $vote){
+                if($laQuestion[0]['Id_question'] === $vote['#Id_question'] && $_SESSION['utilisateur']['id'] === $vote['#Id_profil']){
                     $leVote = $vote['Action_vote'];
                     $couleurOn = "fas fa-heart like-on";
                 }
@@ -68,7 +58,7 @@
                             id=<?php echo $idProfil?>">
                             <?php echo $pseudo ?></a></p>
                             <p><i class="far fa-clock"></i><?php echo $dateQuestion?></p>
-                            <p><i class="far fa-comment-dots"></i><?php echo $nombreReponse?></p>
+                            <p><i class="far fa-comment-dots"></i><?php echo $nombreReponse[0]['COUNT(*)']?></p>
                         </div>
                         <div class="divider"></div>
                         <div class="bubble">
@@ -88,7 +78,7 @@
                                 echo $couleurOn;
                                 ?>"></i>
                             </button>
-                            <span><?php echo $nombreVote?></span>        
+                            <span><?php echo $nombreVote[0]['COUNT(*)']?></span>        
                         </div>
                     </div>
                 </div>

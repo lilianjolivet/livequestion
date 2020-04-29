@@ -5,6 +5,7 @@
     ///=======///
     /// QUESTION ///
     ///=======///
+
     // récupération données table question 
     function recupQuestions(){
         $connexion = connexionBdd();
@@ -25,10 +26,22 @@
         $laQuestion = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $laQuestion;
     }
+    // récupération des questions d'un profil
+    function recupQuestionsProfil($info){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare('SELECT * FROM `question` WHERE `#Id_profil` = :Id_profil');
+        $requete->bindParam(':Id_profil', $idProfil);
+        $idProfil = $info;
+        $requete->execute();
+        $lesQuestions = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        return $lesQuestions;
+    }
 
     ///=======///
     /// REPONSE ///
     ///=======///
+
     // récupération données table réponse
     function recupReponses(){
         $connexion = connexionBdd();
@@ -38,10 +51,21 @@
         $reponses = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $reponses;
     }
+    function calculeReponseQuestion($info){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare('SELECT COUNT(*) FROM reponse WHERE `#Id_question` = :Id_question');
+        $requete->bindParam(':Id_question', $idQuestion);
+        $idQuestion = $info;
+        $requete->execute();
+        $nombreReponse = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        return $nombreReponse;
+    }
 
     ///=======///
     /// PROFIL ///
     ///=======///
+
     // récupération données table profil
     function recupProfils(){
         $connexion = connexionBdd();
@@ -77,6 +101,7 @@
     ///=======///
     /// CATEGORIE ///
     ///=======///
+
     // récupération données table catégorie
     function recupCategs(){
         $connexion = connexionBdd();
@@ -90,11 +115,25 @@
     ///=======///
     /// VOTE ///
     ///=======///
-    // récupération données table vote
-    function recupVotes(){
+
+    // récupération calcule le nombre de vote d'une question
+    function calculeVoteQuestion($info){
         $connexion = connexionBdd();
 
-        $requete = $connexion->prepare("SELECT * FROM `vote`");
+        $requete = $connexion->prepare('SELECT COUNT(*) FROM `vote` WHERE `#Id_question` = :Id_question');
+        $requete->bindParam(':Id_question', $idQuestion);
+        $idQuestion = $info;
+        $requete->execute();
+        $nombreVote = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        return $nombreVote;
+    }
+    // récupération données de vote d'une question
+    function recupVotesQuestion($info){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare('SELECT * FROM `vote` WHERE `#Id_question` = :Id_question');
+        $requete->bindParam(':Id_question', $idQuestion);
+        $idQuestion = $info;
         $requete->execute();
         $votes = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $votes;

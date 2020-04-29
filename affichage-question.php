@@ -3,8 +3,6 @@
     $questions = recupQuestions();
     $profils = recupProfils();
     $categories = recupCategs();
-    $reponses = recupReponses();
-    $votes = recupVotes();
 
 ?>
 <!-- affichage de l'ensemble des questions -->
@@ -27,14 +25,9 @@
                                     <?php }?>
                                 <?php }?>
                             <p><i class="far fa-comment-dots"></i>
-                                <?php 
-                                    $nombreReponse = 0;
-                                    foreach($reponses as $reponse){
-                                        if($question['unique_key'] === $reponse['#unique_key']){
-                                            $nombreReponse = $nombreReponse + 1;
-                                        }
-                                    }
-                                    echo $nombreReponse;
+                                <?php
+                                    $nombreReponse = calculeReponseQuestion($question['Id_question']);
+                                    echo $nombreReponse[0]['COUNT(*)'];
                                 ?>
                             </p>
                             <p><i class="fas fa-tag"></i><?php echo $categories[$question['#Id_categorie']-1]['Libelle_categorie']?></p>
@@ -53,14 +46,12 @@
                         <div class="footer-question">
                         <?php
                         // fonction like en liens avec la page like-fonction.php
-                        $nombreVote = 0;
                         $leVote = 0;
                         $couleurOn = " ";
-                        if(isset($votes) && !empty($votes)){
-                            foreach($votes as $vote){
-                                if($question['Id_question'] === $vote['#Id_question']){
-                                    $nombreVote = $nombreVote + 1;
-                                }
+                        $nombreVote = calculeVoteQuestion($question['Id_question']);
+                        $lesVotes = recupVotesQuestion($question['Id_question']);
+                        if(isset($lesVotes) && !empty($lesVotes)){
+                            foreach($lesVotes as $vote){
                                 if($question['Id_question'] === $vote['#Id_question'] && $_SESSION['utilisateur']['id'] === $vote['#Id_profil']){
                                     $leVote = $vote['Action_vote'];
                                     $couleurOn = "fas fa-heart like-on";
@@ -80,7 +71,7 @@
                                     echo $couleurOn;
                                 ?>"></i>
                             </button>
-                            <span><?php echo $nombreVote?></span> 
+                            <span><?php echo $nombreVote[0]['COUNT(*)']?></span> 
                         </div>
                     </div>
                 </div>

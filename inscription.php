@@ -106,7 +106,7 @@
         if(($answer === 1)){
             $_POST['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT);
             ajoutProfil($_POST);
-            header("Location: ./index.php");
+            header("Location: ./connexion.php");
         }
     }
     ?>

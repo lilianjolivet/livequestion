@@ -1,11 +1,7 @@
 <?php
     require_once('req_sql.php');
-    $questions = recupQuestions();
-    $profils = recupProfils();
-    $reponses = recupReponses();
-    $votes = recupVotes();
 
-//suppression de la question avec ses réponses et ses votes
+//suppression de la question avec ses réponses et ses votes (ADMINISTRATION)
 if(isset($_GET['id_supp_question']) && !empty($_GET['id_supp_question'])){
     $id = $_GET['id_supp_question'];
     suppReponse($id);
@@ -14,53 +10,36 @@ if(isset($_GET['id_supp_question']) && !empty($_GET['id_supp_question'])){
     header('Location: ../administration.php');
 }
 
-//suppression du profil & img avatar du profil stocker
+//suppression du profil & img avatar du profil stocker (DESINCRIPTION)
 $idSupp = $_GET['id_supp'];
 
 if(isset($idSupp)&&!empty($idSupp)){
-    foreach($questions as $question){
-        if($idSupp === $question['#Id_profil']){
-            foreach($reponses as $reponse){
-                if($question['Id_question'] === $reponse['#Id_question']){
-                    suppReponse($reponse['#Id_question']);
-                }
-                suppReponseProfil($idSupp);
-            }
-            foreach($votes as $vote){
-                if($idSupp === $vote['#Id_profil']){
-                    suppVoteProfil($idSupp);
-                }
-            }
-            suppQuestionProfil($idSupp);
+    $lesQuestions = recupQuestionsProfil($idSupp);
+    if(isset($lesQuestions)&&!empty($lesQuestions)){
+        foreach($lesQuestions as $laQuestion){
+            suppReponse($laQuestion['Id_question']);
+            suppVoteQuestion($laQuestion['Id_question']);
         }
-    }
-    //si le profil n'avait pas ajouter de question
-    foreach($reponses as $reponse){
-        if($idSupp === $reponse['#Id_profil']){
-            suppReponseProfil($idSupp);
-        }
-    }
-    foreach($votes as $vote){
-        if($idSupp === $vote['#Id_profil']){
-            suppVoteProfil($idSupp);
-        }
+        suppVoteProfil($idSupp);
+        suppReponseProfil($idSupp);
+        suppQuestionProfil($idSupp);
+    }else{
+        suppReponseProfil($idSupp);
+        suppVoteProfil($idSupp);
     }
     //suppression des avatars stocker du profil
     $extensions = ['jpg', 'jpeg', 'gif', 'png'];
-    $chemin = '';
-    foreach($profils as $profil){
-        if($idSupp == $profil['Id_profil']){
-            $chemin = '../images/avatars/'.$profil['Id_profil'];
-        }
-    }
-    foreach($extensions as $extension){
-        if($profil['avatar'] != 'default.jpg' ){
+    $chemin = '../images/avatars/'.$idSupp;
+    $leProfil = recupLeProfil($idSupp);
+    if($leProfil[0]['avatar'] != 'default.jpg' ){
+        foreach($extensions as $extension){
             $file = $chemin.'.'.$extension;
             if(isset($file)){
-                unlink($file);
+                if(file_exists($file)){
+                    unlink($file);
+                }
             }
-        }
-        
+        }  
     }
     suppProfil($idSupp);
 ?> 
