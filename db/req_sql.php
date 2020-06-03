@@ -15,6 +15,24 @@
         $questions = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $questions;
     }
+    // récupération données nombre de question 
+    function recupNombreQuestions(){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare("SELECT COUNT(*) FROM `question` ORDER BY `Date_creation_question` DESC");
+        $requete->execute();
+        $questions = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        return $questions;
+    }
+    // récupération limite défini de questions 
+    function recupQuestionsLimite($debut,$fin){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare("SELECT * FROM `question` ORDER BY `Date_creation_question` DESC LIMIT $debut,$fin");
+        $requete->execute();
+        $questions = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        return $questions;
+    }
     // récupération données d'une question
     function recupLaQuestion($info){
         $connexion = connexionBdd();

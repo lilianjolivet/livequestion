@@ -90,6 +90,21 @@ i{
     padding-left:5px ;
 }
 
+/* pagination affichage-question */
+.pagination{
+    margin: 20px!important;
+}
+.pagination .page-item a{
+    color:#EC008C66!important;
+}
+.pagination .disabled a{
+    color: #FFF!important;
+}
+.link-already{
+    background-color:#EC008C66!important;
+    color: #FFF!important;
+}
+
 /*===============================*/
 /*===============================*/
 
