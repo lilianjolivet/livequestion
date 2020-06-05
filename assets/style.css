@@ -40,6 +40,102 @@ i{
 .like-on{
     color:#EC008C66;
 }
+/*===============================*/
+/*===============================*/
+
+/**** LISTE AMIS ****/
+
+/*-- bouton amis --*/
+.section-friend{
+    position: fixed;
+    z-index: 99999;
+    bottom: 5%;
+    left: 95%;
+    height:75px;
+    width: 75px;
+}
+.notification-friend{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FF0000;
+    border-radius: 25px;
+    height:22px;
+    width: 22px;
+    left: 53%;
+    top: -5%;
+}
+.notification-friend p{
+    font-size: 11px;
+    color: #fff;
+}
+.button-friend{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EC008C66;
+    border-radius: 7px;
+    height:50px;
+    width: 50px; 
+}
+.button-friend i{
+    color: #fff;
+}
+.button-friend:hover{
+    background-color: rgba(142, 3, 197, 0.65);
+    transition: all 0.3s ease-out;
+}
+/*- modal friend -*/
+#modalFriend .modal-dialog{
+    max-width: 400px!important;
+}
+#modalFriend .modal-content .input-group{
+    padding: 7px;
+}
+#modalFriend .modal-content .input-group button{
+    display: flex;
+    justify-content: center!important;
+    align-items: center!important;
+    background-color: #EC008C66!important;
+}
+#modalFriend .modal-content .input-group i{
+    font-size: 20px;
+}
+#modalFriend .modal-footer{
+    justify-content: start!important;
+}
+#modalFriend .modal-direction-content{
+    display: flex!important;
+    flex-flow: column!important;
+    align-items: unset !important;
+}
+#modalFriend .modal-direction-content .list-invite{
+    display:flex;
+    align-items: center;
+    margin-top:7px ;
+}
+#modalFriend .modal-direction-content .list-invite p{
+    padding-left: 10px;
+}
+#modalFriend .modal-direction-content .list-invite .cross-btn{
+    padding: 1rem 1rem 1.2rem 1rem!important;
+    margin: -1rem -1rem -1rem auto!important;
+}
+#modalFriend .modal-direction-content .list-invite .check-btn{
+    background-color: #fff;
+    border: none;
+    color: rgba(0, 128, 0, 0.527);
+    font-size: 22px;
+    padding: 1rem 1rem !important;
+    margin-left: 5px;
+}
+#modalFriend .modal-direction-content .list-invite .check-btn:hover{
+    color: green;
+}
+
+/*===============================*/
+/*===============================*/
 
 /**** NAVBAR ****/ 
 .nav-link, .navbar-brand{
@@ -129,6 +225,7 @@ i{
 /*--- partie formulaire reponse ---*/
 .formulaire-reponse{
     padding-top: 20px!important;
+    padding-left:0px!important;
 }
 
 /*--- partie reponse ---*/

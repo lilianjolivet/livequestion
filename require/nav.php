@@ -33,7 +33,11 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="./page-perso-profil.php">Profil</a>
                         <?php if($_SESSION['utilisateur']['role'] == 2){?>
-                                <a class="dropdown-item" href="./administration.php">Administration</a>
+                            <a class="dropdown-item" id="dropdownMenuAdmin" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuAdmin">
+                                <a class="dropdown-item" href="./gestion-question.php">gestion questions</a>
+                                <a class="dropdown-item" href="./gestion-categorie.php">gestion catégories</a>
+                            </div>
                         <?php }?>
                         <a class="dropdown-item" href="./require/logout.php">Déconnexion</a>
                         <a class="dropdown-item" data-toggle="modal" data-target="#modal-unsubscribe" href="">Déinscription</a>
@@ -55,7 +59,7 @@
         <h5>Voulez-vous vraiment supprimer votre compte ?</h5>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn" onclick="window.location.href='./db/req_supp_sql.php?id_supp=<?php echo $_SESSION['utilisateur']['id']?>';">valider</button>
+        <button type="button" class="btn" onclick="window.location.href='./db/req_supp_sql.php?id_supp=<?php echo $_SESSION['utilisateur']['id']?>&amp;pseudo_supp=<?php echo $_SESSION['utilisateur']['pseudo']?>';">valider</button>
         <button type="button" class="btn" data-dismiss="modal">Annuler</button>
       </div>
     </div>

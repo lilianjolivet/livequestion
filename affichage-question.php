@@ -2,8 +2,8 @@
     require_once('./db/req_sql.php');
     $profils = recupProfils();
     $categories = recupCategs();
-?>
-<?php
+
+    // pagination des questions
     $questionParPage = 30;
     $nombreQuestion = recupNombreQuestions();
     if(isset($_GET['page']) && !empty($_GET['page'])){
@@ -91,6 +91,7 @@
                 </div>
             </div>
         <?php }?>
+            <!-- système de navigation paginage -->
             <nav aria-label="Page navigation">
             <ul class="pagination">
                 <li class="page-item">

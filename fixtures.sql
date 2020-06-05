@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 28 Avril 2020 à 17:39
+-- Généré le :  Ven 05 Juin 2020 à 22:13
 -- Version du serveur :  5.7.11
 -- Version de PHP :  7.0.3
 
@@ -19,6 +19,28 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `live_question`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `amis`
+--
+
+CREATE TABLE `amis` (
+  `Id_amis` int(11) NOT NULL,
+  `Profil_demande` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `Profil_reception` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `Demande_amis` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `amis`
+--
+
+INSERT INTO `amis` (`Id_amis`, `Profil_demande`, `Profil_reception`, `Demande_amis`) VALUES
+(5, 'laura', 'lucas', 0),
+(6, 'lucas', 'asuka', 0),
+(13, 'laura', 'asuka', 0);
 
 -- --------------------------------------------------------
 
@@ -62,7 +84,8 @@ CREATE TABLE `profil` (
 
 INSERT INTO `profil` (`Id_profil`, `Pseudo_profil`, `Mail_profil`, `MotDePasse_profil`, `Genre_profil`, `#Id_role`, `avatar`) VALUES
 (15, 'lucas', 'lucas@hotmail.fr', '$2y$10$vlLk/Fd6gQJbLnZa1vicAuPWaJM3EFbC5DHfh2b1wzsoah4Ci6jQi', 'male', 2, '15.jpg'),
-(16, 'laura', 'lucasboganin@hotmail.fr', '$2y$10$pYLN3thJYRRqNgQkjE0HLeyxhijC5e4SpKrc.JInBFFWd9NJ95bn6', 'male', 1, '16.png');
+(22, 'laura', 'zffzefzef@zfzef.fr', '$2y$10$uqkArEXYUWNnbo5fphSw5.hF/wsQapltVWCjAu.gOtQ3kkt8zG7ty', 'femelle', 1, 'default.jpg'),
+(24, 'asuka', 'aazeaz', '$2y$10$xNdQOxRrvUIZ79PgHrMx5.VAQc79MGU/ahauVSsgqjdzvwSX9EyQW', 'femelle', 1, '24.png');
 
 -- --------------------------------------------------------
 
@@ -84,8 +107,8 @@ CREATE TABLE `question` (
 --
 
 INSERT INTO `question` (`Id_question`, `Titre_question`, `Date_creation_question`, `#Id_profil`, `#Id_categorie`, `unique_key`) VALUES
-(10, 'doom eternal ou animal crossing ?', '2020-04-28 19:35:16', 15, 3, '5ea86954079e4'),
-(11, 'pc ou console ?', '2020-04-28 19:36:10', 16, 3, '5ea8698a101ce');
+(96, 'wesh ', '2020-06-03 11:54:30', 15, 1, '5ed7735618016'),
+(97, 'les gars', '2020-06-03 11:54:37', 15, 1, '5ed7735d2b8ac');
 
 -- --------------------------------------------------------
 
@@ -101,15 +124,6 @@ CREATE TABLE `reponse` (
   `#Id_question` int(11) NOT NULL,
   `#unique_key` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Contenu de la table `reponse`
---
-
-INSERT INTO `reponse` (`Id_reponse`, `Contenu_reponse`, `Date_reponse`, `#Id_profil`, `#Id_question`, `#unique_key`) VALUES
-(3, 'doom mille fois', '2020-04-28 19:35:57', 16, 10, '5ea86954079e4'),
-(4, 'pour moi c\'est switch', '2020-04-28 19:36:26', 16, 11, '5ea8698a101ce'),
-(5, 'pc > all', '2020-04-28 19:36:56', 15, 11, '5ea8698a101ce');
 
 -- --------------------------------------------------------
 
@@ -144,17 +158,14 @@ CREATE TABLE `vote` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `vote`
---
-
-INSERT INTO `vote` (`Id_vote`, `Action_vote`, `#Id_question`, `#Id_profil`) VALUES
-(94, 1, 10, 16),
-(95, 1, 11, 15),
-(98, 1, 10, 15);
-
---
 -- Index pour les tables exportées
 --
+
+--
+-- Index pour la table `amis`
+--
+ALTER TABLE `amis`
+  ADD PRIMARY KEY (`Id_amis`);
 
 --
 -- Index pour la table `categorie`
@@ -204,6 +215,11 @@ ALTER TABLE `vote`
 --
 
 --
+-- AUTO_INCREMENT pour la table `amis`
+--
+ALTER TABLE `amis`
+  MODIFY `Id_amis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+--
 -- AUTO_INCREMENT pour la table `categorie`
 --
 ALTER TABLE `categorie`
@@ -212,17 +228,17 @@ ALTER TABLE `categorie`
 -- AUTO_INCREMENT pour la table `profil`
 --
 ALTER TABLE `profil`
-  MODIFY `Id_profil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `Id_profil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT pour la table `question`
 --
 ALTER TABLE `question`
-  MODIFY `Id_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `Id_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 --
 -- AUTO_INCREMENT pour la table `reponse`
 --
 ALTER TABLE `reponse`
-  MODIFY `Id_reponse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Id_reponse` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `role`
 --
@@ -232,7 +248,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT pour la table `vote`
 --
 ALTER TABLE `vote`
-  MODIFY `Id_vote` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `Id_vote` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Contraintes pour les tables exportées
 --

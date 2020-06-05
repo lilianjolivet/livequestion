@@ -1,19 +1,34 @@
 <?php
     require_once('req_sql.php');
 
+//suppression de l'amis
+if(!empty($_GET['id_supp_amis'])){
+    suppAmis($_GET['id_supp_amis']);
+    ?> 
+    <script>document.location.href="../home.php"</script>
+    <?php
+}
+//suppression de l'invitation d'amis
+if(!empty($_GET['id_supp_invite'])){
+    suppAmis($_GET['id_supp_invite']);
+    ?> 
+    <script>document.location.href="../home.php"</script>
+    <?php
+}
+
 //suppression de la question avec ses réponses et ses votes (ADMINISTRATION)
 if(isset($_GET['id_supp_question']) && !empty($_GET['id_supp_question'])){
     $id = $_GET['id_supp_question'];
     suppReponse($id);
     suppVoteQuestion($id);
     suppQuestion($id);
-    header('Location: ../administration.php');
+    header('Location: ../gestion-question.php');
 }
 
 //suppression du profil & img avatar du profil stocker (DESINCRIPTION)
-$idSupp = $_GET['id_supp'];
 
-if(isset($idSupp)&&!empty($idSupp)){
+if(isset($_GET['id_supp'])&&!empty($_GET['id_supp']) && isset($_GET['pseudo_supp']) && !empty($_GET['pseudo_supp'])){
+    $idSupp = $_GET['id_supp'];
     $lesQuestions = recupQuestionsProfil($idSupp);
     if(isset($lesQuestions)&&!empty($lesQuestions)){
         foreach($lesQuestions as $laQuestion){
@@ -27,6 +42,7 @@ if(isset($idSupp)&&!empty($idSupp)){
         suppReponseProfil($idSupp);
         suppVoteProfil($idSupp);
     }
+    suppAllAmis($_GET['pseudo_supp']);
     //suppression des avatars stocker du profil
     $extensions = ['jpg', 'jpeg', 'gif', 'png'];
     $chemin = '../images/avatars/'.$idSupp;
@@ -122,4 +138,26 @@ function suppVoteQuestion($info){
     $idQuestion = $info;
     $requete->execute();
 }
-?>
+
+// requête suppression (invitation amis ou amis)
+
+function suppAmis($info){
+    $connexion = connexionBdd();
+
+    $requete = $connexion->prepare('DELETE FROM `amis` WHERE `Id_amis` = :Id_amis');
+    $requete->bindParam(':Id_amis', $idAmis);
+    $idAmis = $info;
+    $requete->execute();
+}
+
+// requête suppression de tout les amis (invitation amis ou amis)
+function suppAllAmis($info){
+    $connexion = connexionBdd();
+
+    $requete = $connexion->prepare('DELETE FROM `amis` WHERE (`Profil_demande` = :Profil_demande or `Profil_reception` = :Profil_reception)');
+    $requete->bindParam(':Profil_demande', $profilDemande);
+    $requete->bindParam(':Profil_reception', $profilReception);
+    $profilDemande = $info;
+    $profilReception = $info;
+    $requete->execute();
+}
