@@ -1,9 +1,46 @@
 <?php
+    session_start();
     require_once('req_sql.php');
 
-//suppression de l'amis
-if(!empty($_GET['id_supp_amis'])){
-    suppAmis($_GET['id_supp_amis']);
+//suppression de l'amis 
+if(!empty($_GET['id_supp_amitie'])){
+    //suppression des données de l'amis sur toutes les questions privées où il est autoriser (reponse/vote)(acces refuser)
+    $lesQuestionsPrivee = recupQuestionsPrivee($_SESSION['utilisateur']['id']);
+    if(!empty($lesQuestionsPrivee)){
+        foreach($lesQuestionsPrivee as $questionPrivee){
+            $lesAmis = explode(':',$questionPrivee['Visible_question']);
+            $positionAmis = array_search($_GET['id_supp_amis'],$lesAmis);
+            if($positionAmis !== false){
+                array_splice($lesAmis,$positionAmis,1);
+                $lesAmis = implode(":",$lesAmis);
+                modifQuestionPrivee($lesAmis,$questionPrivee['Id_question']);
+                suppVotePrivee($questionPrivee['Id_question'],$_GET['id_supp_amis']);
+                suppReponsePrivee($questionPrivee['Id_question'],$_GET['id_supp_amis']);
+                if(empty($lesAmis)){
+                    suppQuestion($questionPrivee['Id_question']);
+                }
+            }
+        }
+    }
+    //suppression de nos données sur toutes les questions privées de l'amis supprimer où nous étions autoriser (reponse/vote)(acces refuser)
+    $lesQuestionsPrivee = recupQuestionsPrivee($_GET['id_supp_amis']);
+    if(!empty($lesQuestionsPrivee)){
+        foreach($lesQuestionsPrivee as $questionPrivee){
+            $lesAmis = explode(':',$questionPrivee['Visible_question']);
+            $positionAmis = array_search($_SESSION['utilisateur']['id'],$lesAmis);
+            if($positionAmis !== false){
+                array_splice($lesAmis,$positionAmis,1);
+                $lesAmis = implode(":",$lesAmis);
+                modifQuestionPrivee($lesAmis,$questionPrivee['Id_question']);
+                suppVotePrivee($questionPrivee['Id_question'],$_SESSION['utilisateur']['id']);
+                suppReponsePrivee($questionPrivee['Id_question'],$_SESSION['utilisateur']['id']);
+                if(empty($lesAmis)){
+                    suppQuestion($questionPrivee['Id_question']);
+                }
+            }
+        }
+    }
+    suppAmis($_GET['id_supp_amitie']);
     ?> 
     <script>document.location.href="../home.php"</script>
     <?php
@@ -26,10 +63,27 @@ if(isset($_GET['id_supp_question']) && !empty($_GET['id_supp_question'])){
 }
 
 //suppression du profil & img avatar du profil stocker (DESINCRIPTION)
-
 if(isset($_GET['id_supp'])&&!empty($_GET['id_supp']) && isset($_GET['pseudo_supp']) && !empty($_GET['pseudo_supp'])){
     $idSupp = $_GET['id_supp'];
     $lesQuestions = recupQuestionsProfil($idSupp);
+    $allQuestionsPrivee = recupAllQuestionsPrivee();
+    // enlève la référence du profil des questions privée où il avait acces (suppression des reponses et des votes aussi)
+    if(!empty($allQuestionsPrivee)){
+        foreach($allQuestionsPrivee as $questionPrivee){
+            $lesAmis = explode(':',$questionPrivee['Visible_question']);
+            $positionAmis = array_search($idSupp,$lesAmis);
+            if($positionAmis !== false){
+                array_splice($lesAmis,$positionAmis,1);
+                $lesAmis = implode(":",$lesAmis);
+                suppVotePrivee($questionPrivee['Id_question'],$idSupp);
+                suppReponsePrivee($questionPrivee['Id_question'],$idSupp);
+                modifQuestionPrivee($lesAmis,$questionPrivee['Id_question']);
+                if(empty($lesAmis)){
+                    suppQuestion($questionPrivee['Id_question']);
+                }
+            }
+        }
+    }
     if(isset($lesQuestions)&&!empty($lesQuestions)){
         foreach($lesQuestions as $laQuestion){
             suppReponse($laQuestion['Id_question']);
@@ -107,6 +161,10 @@ function suppProfil($info){
     $requete->execute();
 }
 
+///=======///
+/// VOTE ///
+///=======///
+
 // requête suppression des votes des questions du profil (avant suppression du profil) BDD 
 function suppVoteProfil($info){
     $connexion = connexionBdd();
@@ -139,8 +197,11 @@ function suppVoteQuestion($info){
     $requete->execute();
 }
 
-// requête suppression (invitation amis ou amis)
+///=======///
+/// AMIS ///
+///=======///
 
+// requête suppression (invitation amis ou amis)
 function suppAmis($info){
     $connexion = connexionBdd();
 
@@ -159,5 +220,29 @@ function suppAllAmis($info){
     $requete->bindParam(':Profil_reception', $profilReception);
     $profilDemande = $info;
     $profilReception = $info;
+    $requete->execute();
+}
+
+// requête suppression des reponses de l'amis supprimer, sur les questions privée
+function suppReponsePrivee($info,$id){
+    $connexion = connexionBdd();
+
+    $requete = $connexion->prepare('DELETE FROM `reponse` WHERE `#Id_profil` = :fk_id_profil AND `#Id_question` = :fk_id_question');
+    $requete->bindParam(':fk_id_profil', $idProfil);
+    $requete->bindParam(':fk_id_question', $idQuestion);
+    $idQuestion = $info;
+    $idProfil = $id;
+    $requete->execute();
+}
+
+// // requête suppression des votes de l'amis supprimer, sur les questions privée
+function suppVotePrivee($info,$id){
+    $connexion = connexionBdd();
+
+    $requete = $connexion->prepare('DELETE FROM `vote` WHERE `#Id_profil` = :fk_id_profil AND `#Id_question` = :fk_id_question');
+    $requete->bindParam(':fk_id_profil', $idProfil);
+    $requete->bindParam(':fk_id_question', $idQuestion);
+    $idQuestion = $info;
+    $idProfil = $id;
     $requete->execute();
 }

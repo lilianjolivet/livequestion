@@ -24,7 +24,7 @@
         $questions = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $questions;
     }
-    // récupération limite défini de questions 
+    // récupération limite défini de question 
     function recupQuestionsLimite($debut,$fin){
         $connexion = connexionBdd();
 
@@ -51,6 +51,30 @@
         $requete = $connexion->prepare('SELECT * FROM `question` WHERE `#Id_profil` = :Id_profil');
         $requete->bindParam(':Id_profil', $idProfil);
         $idProfil = $info;
+        $requete->execute();
+        $lesQuestions = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        return $lesQuestions;
+    }
+    // récupération des questions privée d'un profil
+    function recupQuestionsPrivee($id){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare('SELECT * FROM `question` WHERE `#Id_profil` = :Id_profil AND `Visible_question` != :Visible_question');
+        $requete->bindParam(':Id_profil', $idProfil);
+        $requete->bindParam(':Visible_question', $visibleQuestion);
+        $idProfil = $id;
+        $visibleQuestion = 'all';
+        $requete->execute();
+        $lesQuestions = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        return $lesQuestions;
+    }
+     // récupération de toutes les questions privée
+     function recupAllQuestionsPrivee(){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare('SELECT * FROM `question` WHERE `Visible_question` != :Visible_question');
+        $requete->bindParam(':Visible_question', $visibleQuestion);
+        $visibleQuestion = 'all';
         $requete->execute();
         $lesQuestions = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $lesQuestions;
@@ -172,6 +196,7 @@
         $votes = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $votes;
     }
+
     ///=======///
     /// AMIS ///
     ///=======///
@@ -236,25 +261,27 @@
         return $leProfil;
     }
 
-    ///=======///
-    /// INSERTION ///
-    ///=======////
+    ///=======///=====================================================================
+    /// INSERTION ///=================================================================
+    ///=======////====================================================================
 
     // requête insertion BDD d'une question
     function insertQuestion(array $info){
         $connexion = connexionBdd();
 
-        $requete = $connexion->prepare('INSERT INTO `question`(`Titre_question`, `Date_creation_question`, `#Id_profil`, `#Id_categorie`, `unique_key`) VALUES (:Titre_question, :Date_creation_question, :FK_Id_profil, :Id_categorie, :unique_key)');
+        $requete = $connexion->prepare('INSERT INTO `question`(`Titre_question`, `Date_creation_question`, `#Id_profil`, `#Id_categorie`, `unique_key`, `Visible_question`) VALUES (:Titre_question, :Date_creation_question, :FK_Id_profil, :Id_categorie, :unique_key, :Visible_question)');
         $requete->bindParam(':Titre_question', $titreQuestion);
         $requete->bindParam(':Date_creation_question', $dateQuestion);
         $requete->bindParam(':FK_Id_profil', $idFkProfil);
         $requete->bindParam(':Id_categorie', $idCateg);
         $requete->bindParam(':unique_key', $idKey);
+        $requete->bindParam(':Visible_question', $visibleQuestion);
         $titreQuestion = $info['question'];
         $dateQuestion = $info['date'];
         $idFkProfil = $_SESSION['utilisateur']['id'];
         $idCateg = $info['inputCateg'];
         $idKey = $info['id_key'];
+        $visibleQuestion = $info['friend'];
         $requete->execute();
     }
 
@@ -307,6 +334,7 @@
         $idFkProfil = $info['id_profil'];
         $requete->execute();
     }
+
     // requête insertion BDD d'une demande d'amis
     function ajoutDemandeAmis($info){
         $connexion = connexionBdd();
@@ -324,9 +352,10 @@
         <?php
     }
 
-    ///=======///
-    /// MODIFICATION ///
-    ///=======////
+    
+    ///=======///=====================================================================
+    /// MODIFICATION ///==============================================================
+    ///=======///=====================================================================
 
     // requête modification BDD d'un profil
     function modifProfil(array $info){
@@ -389,5 +418,18 @@
             document.location.href="../home.php";
     </script>
     <?php
+    }
+
+    // requête après suppression de l'amis, suppression de l'amis de toute les questions privée (de l'utilisateur qui l'a supprimer)
+    // (modification de liste des utilisateur accessible à la question privée)
+    function modifQuestionPrivee($info,$id){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare('UPDATE question SET Visible_question = :Visible_question WHERE Id_question = :Id_question');
+        $requete->bindParam(':Visible_question', $visibleQuestion);
+        $requete->bindParam(':Id_question', $idQuestion);
+        $visibleQuestion = $info;
+        $idQuestion = $id;
+        $requete->execute();
     }
 ?>

@@ -107,7 +107,7 @@
                     <div class="list-invite">
                         <img src="./images/avatars/<?php echo $profilAmi[0]['avatar']?>" alt="" class="rounded avatar-option"> 
                         <p><a href=""><?php echo $profilAmi[0]['Pseudo_profil']?></a></p>
-                        <button type="button" class="close cross-btn" aria-label="Close" onclick="window.location.href = './db/req_supp_sql.php?id_supp_amis=<?php echo $ami['Id_amis']?>';">
+                        <button type="button" class="close cross-btn" aria-label="Close" onclick="window.location.href = './db/req_supp_sql.php?id_supp_amitie=<?php echo $ami['Id_amis']?>&amp;id_supp_amis=<?php echo $profilAmi[0]['Id_profil']?>';">
                             <span aria-hidden="true">&times;</span>
                         </button> 
                     </div>

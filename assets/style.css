@@ -40,6 +40,9 @@ i{
 .like-on{
     color:#EC008C66;
 }
+.like-on-friend{
+    color:#80bfff;
+}
 /*===============================*/
 /*===============================*/
 
@@ -178,6 +181,11 @@ i{
     padding:7px 15px; 
     border-radius:3px; 
 }
+
+.bubble-friend{
+    background:#80bfff; 
+}
+
 .bubble .body-question .title-question h2{
     font-size: 23px;
 }

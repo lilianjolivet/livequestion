@@ -5,14 +5,13 @@
     require_once('./traitement/traitement_formulaire.php');
 
     $categories = recupCategs();
+    $amis = recupAmis();
 
     // traitement du formaulaire
     if (!empty($_POST)) {
 		$traitement = traitementFormulaireQuestion($_POST);
     }  
 ?>
-
- 
 <div class="container formulaire">
     <form action="#" method="POST">
         <h2 class="pt-4">Posez une question</h2>
@@ -40,6 +39,25 @@
                     <?php }?>
                 </select>
             </div>
+            <div class="form-group col-md-4">
+                <label for="friend[]">Qui pourra voir votre question ?</label>
+                <select type="number" name="friend[]" class="selectpicker form-control" title="aucune options selectionné" id="friend[]" multiple>
+                    <?php
+                        if(!empty($amis)){
+                            foreach($amis as $ami){
+                                if($_SESSION['utilisateur']['pseudo'] === $ami['Profil_demande']){
+                                    $profilAmi = recupProfilAmis($ami['Profil_reception']);
+                                }elseif($_SESSION['utilisateur']['pseudo'] === $ami['Profil_reception']){
+                                    $profilAmi = recupProfilAmis($ami['Profil_demande']);
+                                }
+                                ?>
+                                <option value="<?php echo $profilAmi[0]['Id_profil'] ?>"><?php echo $profilAmi[0]['Pseudo_profil'] ?></option>
+                                <?php
+                            }
+                        }
+                    ?>
+                </select>
+            </div>
             <input type="hidden" name="date" value="
                 <?php
                 date_default_timezone_set('Europe/Paris');
@@ -55,8 +73,13 @@
 <?php 
 $refresh = 0;
 if(!empty($_POST['question']) && strlen($_POST['question'])<= 255){
+    if(empty($_POST['friend'])){
+        $_POST['friend'] = 'all';
+    }else{
+        $_POST['friend'] = implode(":",$_POST['friend']);
+    }
     insertQuestion($_POST);
-    $refresh = 1;
+    $refresh = 1;  
 }
 ?>
 <script>
