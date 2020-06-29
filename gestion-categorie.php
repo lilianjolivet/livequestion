@@ -9,7 +9,7 @@
     }
     $categories = recupCategs();
 
-    // traitement du formaulaire 
+    //gestions de l'ensemble des catégories (ajout/suppression)
 ?>
     <div class="container formulaire">
         <form action="" method="POST">

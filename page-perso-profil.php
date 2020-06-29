@@ -43,7 +43,8 @@
 	   } else {
 	      $msg = "Votre photo de profil ne doit pas dépasser 2Mo et faire 200x200";
 	   }
-	}
+    }
+    //formulaire permettant la modification des données utilisateur
 ?>
 <div class="form-profil">
     <div class="container shadow p-3 mb-5 bg-white rounded">

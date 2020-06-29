@@ -75,6 +75,7 @@
                     </div>
                 </div>
             <?php }else{
+                    // affichage questions privée
                     $amis = explode(':',$question['Visible_question']);
                     if(in_array($_SESSION['utilisateur']['id'],$amis) || $_SESSION['utilisateur']['id'] === $question['#Id_profil']){
                 ?>

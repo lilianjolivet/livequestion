@@ -1,7 +1,6 @@
 <?php 
     require_once('db.php');
 
-
     ///=======///
     /// QUESTION ///
     ///=======///
@@ -104,6 +103,7 @@
         $reponses = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $reponses;
     }
+    // récupération nombre de reponse d'une question
     function calculeReponseQuestion($info){
         $connexion = connexionBdd();
 
@@ -181,7 +181,7 @@
         return $categories;
     }
 
-    // récupération données table catégorie
+    // récupération données table catégorie (sans la catégorie 'autre')
     function recupCategs(){
         $connexion = connexionBdd();
 
@@ -208,7 +208,7 @@
             return False;
         }
     }
-    // recherche catégorie
+    // recupération d'une catégorie (par son id)
     function recupUneCateg($info){
         $connexion = connexionBdd();
 

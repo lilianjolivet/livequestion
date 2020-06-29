@@ -2,6 +2,7 @@
 session_start();
 require_once('../../db/req_sql.php');
 
+// fonction pour vérifier si la requête à été fait en ajax
 function isAjax(){
     return isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
 }
@@ -15,6 +16,7 @@ if(isAjax()){
             if(empty($laQuestion)){
                 echo '2';
             }else{
+                //affichage question privée (vérification si l'utilisateur à accès)
                 if($laQuestion['Visible_question'] !== 'all'){
                     $amis = explode(':',$laQuestion['Visible_question']);
                     if(in_array($_SESSION['utilisateur']['id'],$amis) !== true && $_SESSION['utilisateur']['id'] !== $laQuestion['#Id_profil']){
@@ -87,6 +89,7 @@ if(isAjax()){
                         <?php
                     }
                 }else{
+                    //affichage de la question (disponible pour tous les utilisateurs)
                     $leProfil = recupLeProfil($laQuestion['#Id_profil']);
                 ?>
                     <div class="container search-answer-container">
