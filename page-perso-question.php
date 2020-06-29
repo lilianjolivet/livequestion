@@ -6,8 +6,6 @@
     $reponses = recupReponses();
     $profils = recupProfils();
 
-    $adresse = 'page-perso-question';
-
     // traitement du formaulaire
     if (!empty($_POST)) {
 		$traitement = traitementFormulaireReponse($_POST);
@@ -18,30 +16,33 @@
         $idQuestion = $_GET['id'];
 
         $laQuestion = recupLaQuestion($idQuestion);
-        $leProfil = recupLeProfil($laQuestion[0]['#Id_profil']);
-        $nombreReponse = calculeReponseQuestion($laQuestion[0]['Id_question']);
+        $leProfil = recupLeProfil($laQuestion['#Id_profil']);
 
-        $titreQuestion = $laQuestion[0]['Titre_question'];
-        $uniqueKey = $laQuestion[0]['unique_key'];
-        $dateQuestion = $laQuestion[0]['Date_creation_question'];
-        $titreQuestion = $laQuestion[0]['Titre_question'];
+        if($laQuestion['Visible_question'] !== 'all'){
+            $amis = explode(':',$laQuestion['Visible_question']);
+            if(in_array($_SESSION['utilisateur']['id'],$amis) !== true && $_SESSION['utilisateur']['id'] !== $laQuestion['#Id_profil']){
+                header('Location: ./home.php');
+            }
+        }
+        $nombreReponse = calculeReponseQuestion($laQuestion['Id_question']);
+
+        $titreQuestion = $laQuestion['Titre_question'];
+        $uniqueKey = $laQuestion['unique_key'];
+        $dateQuestion = $laQuestion['Date_creation_question'];
+        $titreQuestion = $laQuestion['Titre_question'];
 
         $pseudo = $leProfil[0]['Pseudo_profil'];
         $idProfil = $leProfil[0]['Id_profil'];
         $avatar = $leProfil[0]['avatar'];
-     
+        
         // fonction like en liens avec la page like-fonction.php
         $leVote = 0;
         $couleurOn = " ";
-        $nombreVote = calculeVoteQuestion($laQuestion[0]['Id_question'] );
-        $lesVotes = recupVotesQuestion($laQuestion[0]['Id_question'] );
-        if(isset($lesVotes) && !empty($lesVotes)){
-            foreach($lesVotes as $vote){
-                if($laQuestion[0]['Id_question'] === $vote['#Id_question'] && $_SESSION['utilisateur']['id'] === $vote['#Id_profil']){
-                    $leVote = $vote['Action_vote'];
-                    $couleurOn = "fas fa-heart like-on";
-                }
-            }
+        $nombreVote = calculeVoteQuestion($laQuestion['Id_question']);
+        $leVote = recupVoteQuestion($laQuestion['Id_question'],$_SESSION['utilisateur']['id']);
+        if(isset($leVote) && !empty($leVote)){
+            $leVote = $leVote[0]['Action_vote'];
+            $couleurOn = "fas fa-heart like-on";
             $leVote = $leVote + 1;
         }else{
             $leVote = 1;
@@ -70,7 +71,8 @@
                         </div>
                         <div class="divider"></div>
                         <div class="footer-question">
-                            <button type="button" class="btn-like" onclick="window.location.href = './traitement/like-fonction.php?vote=<?php echo $leVote?>&amp;id_question=<?php echo $idQuestion?>&amp;ad=<?php echo $adresse?>';">
+                        
+                            <button type="button" class="btn-like" href = "./traitement/like-fonction.php?vote=<?php echo $leVote?>&amp;id_question=<?php echo $idQuestion?>&amp;nbe=<?php echo $nombreVote[0]['COUNT(*)']?>">
                                 <i class="<?php 
                                 if($leVote === 1){
                                     $couleurOn = "far fa-heart";
@@ -153,7 +155,9 @@
                 <?php }?>
             <?php }?>
         </div>
-    <?php }?>
+    <?php }else{
+        header('Location: ./home.php');
+    }?>
     <script>
         //fonction effet rafraichissement page (redirection vers la page actuelle)
         function reload($nbe){

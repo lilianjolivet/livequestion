@@ -208,7 +208,38 @@ i{
     background-color:#EC008C66!important;
     color: #FFF!important;
 }
+/* barre de recherche question */
 
+.search-question-bar{
+    margin-top: 10px;
+}
+.search-question-bar .btn-outline-secondary{
+    border-color: #EC008CB3!important;
+}
+.ui-menu{
+    border: #EC008C66 1px solid;
+    border-radius: 3px;
+    padding: 5px;
+    list-style: none;
+    width: 100px;
+    background-color: white;
+    color:#EC008CB3;
+    font-size: 20px;
+    cursor: pointer;
+}
+.ui-menu-item{
+    
+}
+.ui-menu-item:hover{
+    color:rgba(103, 6, 141, 0.65);
+    transition: all 0.3s ease-out;
+}
+.ui-menu-item-wrapper{
+}
+
+.ui-helper-hidden-accessible{
+    opacity: 0;
+}
 /*===============================*/
 /*===============================*/
 
@@ -282,7 +313,9 @@ i{
 /*===============================*/
 /*===============================*/
 
-/**** page administration ****/ 
+/**** adiministration ****/
+
+/*---- page gestion-questions ---*/ 
 .admin{
     color:#EC008C66;
 }
@@ -290,6 +323,14 @@ i{
 .cross-btn{
     color:#FF0000!important;
     font-size: 35px!important;
+}
+
+/*--- page gestion-categories ---*/
+.btn-form-categ{
+    margin-top:33px!important;
+}
+.btn-categ{
+    height: 36px!important;
 }
 
 /*===============================*/

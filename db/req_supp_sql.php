@@ -67,7 +67,7 @@ if(isset($_GET['id_supp'])&&!empty($_GET['id_supp']) && isset($_GET['pseudo_supp
     $idSupp = $_GET['id_supp'];
     $lesQuestions = recupQuestionsProfil($idSupp);
     $allQuestionsPrivee = recupAllQuestionsPrivee();
-    // enlève la référence du profil des questions privée où il avait acces (suppression des reponses et des votes aussi)
+    // enlève la référence du profil des questions privée où il avait accès (suppression des reponses et des votes aussi)
     if(!empty($allQuestionsPrivee)){
         foreach($allQuestionsPrivee as $questionPrivee){
             $lesAmis = explode(':',$questionPrivee['Visible_question']);
@@ -84,6 +84,7 @@ if(isset($_GET['id_supp'])&&!empty($_GET['id_supp']) && isset($_GET['pseudo_supp
             }
         }
     }
+    // suppression des votes/questions/reponses du profil (dont les votes et les reponses que comporte les questions du profil)
     if(isset($lesQuestions)&&!empty($lesQuestions)){
         foreach($lesQuestions as $laQuestion){
             suppReponse($laQuestion['Id_question']);
@@ -235,7 +236,7 @@ function suppReponsePrivee($info,$id){
     $requete->execute();
 }
 
-// // requête suppression des votes de l'amis supprimer, sur les questions privée
+// requête suppression des votes de l'amis supprimer, sur les questions privée
 function suppVotePrivee($info,$id){
     $connexion = connexionBdd();
 
@@ -246,3 +247,4 @@ function suppVotePrivee($info,$id){
     $idProfil = $id;
     $requete->execute();
 }
+

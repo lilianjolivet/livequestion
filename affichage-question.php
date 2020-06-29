@@ -1,7 +1,7 @@
 <?php
     require_once('./db/req_sql.php');
     $profils = recupProfils();
-    $categories = recupCategs();
+    $categories = recupAllCategs();
 
     // pagination des questions
     $questionParPage = 30;
@@ -20,7 +20,21 @@
     $questions = recupQuestionsLimite($depart,$questionParPage);
 ?> 
 <section class="affichage-question">
+    <!-- barre de recherche d'une question -->
     <div class="container">
+        <form action="./traitement/traitement_recherche_question/affiche-after-search.php"  id="search-form" method="POST">
+            <div class="input-group w-75 mx-auto search-question-bar">
+                <input type="text" id="search" name="search" class="form-control" placeholder="Recherche d'une question ⊂◉‿◉つ" aria-label="recherche d'une question" aria-describedby="button-search">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-search"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            <!-- error-search permet d'afficher l'erreur de la recherche (champ vide ou invalide) -->
+            <span class="erreur error-search"></span>
+        </form>
+    </div>
+    <!-- search-answer-container permet d'afficher le resultat de la recherche -->
+    <div class="container search-answer-container">
         <?php 
             // affichage de l'ensemble des questions qui sont en 'all'
             foreach($questions as $question){ 
@@ -47,7 +61,8 @@
                                             echo $nombreReponse[0]['COUNT(*)'];
                                         ?>
                                     </p>
-                                    <p><i class="fas fa-tag"></i><?php echo $categories[$question['#Id_categorie']-1]['Libelle_categorie']?></p>
+                                    <?php $laCategorie = recupUneCateg($question['#Id_categorie']); ?>
+                                    <p><i class="fas fa-tag"></i><?php echo $laCategorie[0]['Libelle_categorie']?></p>
                                 </div>
                                 <div class="divider"></div>
                                 <div class="bubble">
@@ -66,21 +81,17 @@
                                 $leVote = 0;
                                 $couleurOn = " ";
                                 $nombreVote = calculeVoteQuestion($question['Id_question']);
-                                $lesVotes = recupVotesQuestion($question['Id_question']);
-                                if(isset($lesVotes) && !empty($lesVotes)){
-                                    foreach($lesVotes as $vote){
-                                        if($question['Id_question'] === $vote['#Id_question'] && $_SESSION['utilisateur']['id'] === $vote['#Id_profil']){
-                                            $leVote = $vote['Action_vote'];
-                                            $couleurOn = "fas fa-heart like-on";
-                                        }
-                                    }
+                                $leVote = recupVoteQuestion($question['Id_question'],$_SESSION['utilisateur']['id']);
+                                if(isset($leVote) && !empty($leVote)){
+                                    $leVote = $leVote[0]['Action_vote'];
+                                    $couleurOn = "fas fa-heart like-on";
                                     $leVote = $leVote + 1;
                                 }else{
                                     $leVote = 1;
                                 }
                                 $adresse = 'affichage-question';
                                 ?>
-                                    <button type="button" class="btn-like" onclick="window.location.href = './traitement/like-fonction.php?vote=<?php echo $leVote?>&amp;id_question=<?php echo $question['Id_question']?>&amp;ad=<?php echo $adresse?>';">
+                                    <button type="button" class="btn-like" href = "./traitement/like-fonction.php?vote=<?php echo $leVote?>&amp;id_question=<?php echo $question['Id_question']?>&amp;nbe=<?php echo $nombreVote[0]['COUNT(*)']?>">
                                         <i class="<?php 
                                             if($leVote === 1){
                                                 $couleurOn = "far fa-heart";
@@ -120,7 +131,8 @@
                                             echo $nombreReponse[0]['COUNT(*)'];
                                         ?>
                                     </p>
-                                    <p><i class="fas fa-tag"></i><?php echo $categories[$question['#Id_categorie']-1]['Libelle_categorie']?></p>
+                                    <?php $laCategorie = recupUneCateg($question['#Id_categorie']); ?>
+                                    <p><i class="fas fa-tag"></i><?php echo $laCategorie[0]['Libelle_categorie']?></p>
                                 </div>
                                 <div class="divider"></div>
                                 <div class="bubble bubble-friend">
@@ -139,21 +151,17 @@
                                 $leVote = 0;
                                 $couleurOn = " ";
                                 $nombreVote = calculeVoteQuestion($question['Id_question']);
-                                $lesVotes = recupVotesQuestion($question['Id_question']);
-                                if(isset($lesVotes) && !empty($lesVotes)){
-                                    foreach($lesVotes as $vote){
-                                        if($question['Id_question'] === $vote['#Id_question'] && $_SESSION['utilisateur']['id'] === $vote['#Id_profil']){
-                                            $leVote = $vote['Action_vote'];
-                                            $couleurOn = "fas fa-heart like-on-friend";
-                                        }
-                                    }
+                                $leVote = recupVoteQuestion($question['Id_question'],$_SESSION['utilisateur']['id']);
+                                if(isset($leVote) && !empty($leVote)){
+                                    $leVote = $leVote[0]['Action_vote'];
+                                    $couleurOn = "fas fa-heart like-on-friend";
                                     $leVote = $leVote + 1;
                                 }else{
                                     $leVote = 1;
                                 }
                                 $adresse = 'affichage-question';
                                 ?>
-                                    <button type="button" class="btn-like" onclick="window.location.href = './traitement/like-fonction.php?vote=<?php echo $leVote?>&amp;id_question=<?php echo $question['Id_question']?>&amp;ad=<?php echo $adresse?>';">
+                                    <button type="button" class="btn-like" href = "./traitement/like-fonction.php?vote_private=<?php echo $leVote?>&amp;id_question=<?php echo $question['Id_question']?>&amp;nbe=<?php echo $nombreVote[0]['COUNT(*)']?>">
                                         <i class="<?php 
                                             if($leVote === 1){
                                                 $couleurOn = "far fa-heart";

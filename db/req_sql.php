@@ -33,7 +33,7 @@
         $questions = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $questions;
     }
-    // récupération données d'une question
+    // récupération données d'une question (par l'id)
     function recupLaQuestion($info){
         $connexion = connexionBdd();
 
@@ -41,14 +41,25 @@
         $requete->bindParam(':Id_question', $idQuestion);
         $idQuestion = $info;
         $requete->execute();
-        $laQuestion = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        $laQuestion = $requete->fetch(\PDO::FETCH_ASSOC);
+        return $laQuestion;
+    }
+    // récupération données d'une question (par le titre de la question)
+    function recupLaQuestionTitre($info){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare('SELECT * FROM `question` WHERE `Titre_question` = :Titre_question');
+        $requete->bindParam(':Titre_question', $question);
+        $question = $info;
+        $requete->execute();
+        $laQuestion = $requete->fetch(\PDO::FETCH_ASSOC);
         return $laQuestion;
     }
     // récupération des questions d'un profil
     function recupQuestionsProfil($info){
         $connexion = connexionBdd();
 
-        $requete = $connexion->prepare('SELECT * FROM `question` WHERE `#Id_profil` = :Id_profil');
+        $requete = $connexion->prepare('SELECT * FROM `question` WHERE `#Id_profil` = :Id_profil ORDER BY `Date_creation_question` DESC');
         $requete->bindParam(':Id_profil', $idProfil);
         $idProfil = $info;
         $requete->execute();
@@ -161,10 +172,49 @@
     ///=======///
 
     // récupération données table catégorie
-    function recupCategs(){
+    function recupAllCategs(){
         $connexion = connexionBdd();
 
         $requete = $connexion->prepare("SELECT * FROM `categorie`");
+        $requete->execute();
+        $categories = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        return $categories;
+    }
+
+    // récupération données table catégorie
+    function recupCategs(){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare("SELECT * FROM `categorie` WHERE `Libelle_categorie` != :Libelle_categorie");
+        $requete->bindParam('Libelle_categorie', $categorie);
+        $categorie = 'autre';
+        $requete->execute();
+        $categories = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        return $categories;
+    }
+
+    // recherche catégorie
+    function rechercheCateg($info){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare("SELECT * FROM `categorie` WHERE `Libelle_categorie` = :Libelle_categorie");
+        $requete->bindParam('Libelle_categorie', $categorie);
+        $categorie = $info;
+        $requete->execute();
+        $categories = $requete->fetchAll(\PDO::FETCH_ASSOC);
+        if(!empty($categories)){
+            return True;
+        }else{
+            return False;
+        }
+    }
+    // recherche catégorie
+    function recupUneCateg($info){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare("SELECT * FROM `categorie` WHERE `Id_categorie` = :Id_categorie");
+        $requete->bindParam('Id_categorie', $categorie);
+        $categorie = $info;
         $requete->execute();
         $categories = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $categories;
@@ -185,13 +235,15 @@
         $nombreVote = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $nombreVote;
     }
-    // récupération données de vote d'une question
-    function recupVotesQuestion($info){
+    // récupération donnée du vote de utilisateur sur la question
+    function recupVoteQuestion($info,$id){
         $connexion = connexionBdd();
 
-        $requete = $connexion->prepare('SELECT * FROM `vote` WHERE `#Id_question` = :Id_question');
+        $requete = $connexion->prepare('SELECT * FROM `vote` WHERE `#Id_question` = :Id_question AND `#Id_profil` = :Id_profil');
         $requete->bindParam(':Id_question', $idQuestion);
+        $requete->bindParam(':Id_profil', $idProfil);
         $idQuestion = $info;
+        $idProfil = $id;
         $requete->execute();
         $votes = $requete->fetchAll(\PDO::FETCH_ASSOC);
         return $votes;
@@ -352,6 +404,21 @@
         <?php
     }
 
+    // requête insertion BDD d'une catégorie
+    function ajoutCateg($info){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare('INSERT INTO `categorie`(`Libelle_categorie`) VALUES (:Libelle_categorie)');
+        $requete->bindParam(':Libelle_categorie', $categorie);
+        $categorie = $info;
+        $requete->execute();
+        ?>
+        <script>
+                document.location.href="./gestion-categorie.php";
+        </script>
+        <?php
+    }
+
     
     ///=======///=====================================================================
     /// MODIFICATION ///==============================================================
@@ -430,6 +497,27 @@
         $requete->bindParam(':Id_question', $idQuestion);
         $visibleQuestion = $info;
         $idQuestion = $id;
+        $requete->execute();
+    }
+
+    // modification des catégories des questions
+    function modifCategQuestion($info){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare('UPDATE question SET `#Id_categorie` = :autre WHERE `#Id_categorie` = :Id_categorie');
+        $requete->bindParam(':Id_categorie', $idCategorie);
+        $requete->bindParam(':autre', $default);
+        $idCategorie = $info;
+        $default = 0;
+        $requete->execute();
+    }
+    // requête suppression des votes de l'amis supprimer, sur les questions privée
+    function suppCategs($info){
+        $connexion = connexionBdd();
+
+        $requete = $connexion->prepare('DELETE FROM `categorie` WHERE `Id_categorie` = :Id_categorie');
+        $requete->bindParam(':Id_categorie', $IdCategorie);
+        $IdCategorie = $info;
         $requete->execute();
     }
 ?>

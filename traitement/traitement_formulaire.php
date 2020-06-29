@@ -121,4 +121,22 @@
 			'succes' => true,
 		];
 	}
+
+	// traitement formulaire pour ajouter une catégorie
+	function traitementFormulaireCateg(array $informations) {
+		$erreurs = [];
+		
+		if (empty($informations[''])) {
+			$erreurs['une_categorie'] = 'Veuillez saisir une catégorie';
+		}
+		if (!empty($erreurs)) {
+			return [
+				'succes' => false,
+				'erreurs' => $erreurs,
+			];
+		}
+		return [
+			'succes' => true,
+		];
+	}
 ?>

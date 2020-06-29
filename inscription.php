@@ -46,8 +46,8 @@
                 <label class="input-group-text" for="inputGroupSelect01">Sexe</label>
             </div>
             <select name="sexe" class="custom-select" id="inputGroupSelect01">
-                <option value="femelle">Femme</option>
-                <option value="male">Homme</option>
+                <option value="Femme">Femme</option>
+                <option value="Homme">Homme</option>
             </select>
         </div>
         <span class="erreur">
