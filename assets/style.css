@@ -86,7 +86,7 @@ i{
     color: #fff;
 }
 .button-friend:hover{
-    background-color: rgba(142, 3, 197, 0.65);
+    background-color: #8e03c5;
     transition: all 0.3s ease-out;
 }
 /*- modal friend -*/
@@ -128,13 +128,13 @@ i{
 #modalFriend .modal-direction-content .list-invite .check-btn{
     background-color: #fff;
     border: none;
-    color: rgba(0, 128, 0, 0.527);
+    color: #008000;
     font-size: 22px;
     padding: 1rem 1rem !important;
     margin-left: 5px;
 }
 #modalFriend .modal-direction-content .list-invite .check-btn:hover{
-    color: green;
+    color:#008000;
 }
 
 /*===============================*/
@@ -234,9 +234,6 @@ i{
     color:rgba(103, 6, 141, 0.65);
     transition: all 0.3s ease-out;
 }
-.ui-menu-item-wrapper{
-}
-
 .ui-helper-hidden-accessible{
     opacity: 0;
 }
