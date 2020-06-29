@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Ven 05 Juin 2020 à 22:13
+-- Généré le :  Lun 29 Juin 2020 à 21:05
 -- Version du serveur :  5.7.11
 -- Version de PHP :  7.0.3
 
@@ -38,9 +38,8 @@ CREATE TABLE `amis` (
 --
 
 INSERT INTO `amis` (`Id_amis`, `Profil_demande`, `Profil_reception`, `Demande_amis`) VALUES
-(5, 'laura', 'lucas', 0),
-(6, 'lucas', 'asuka', 0),
-(13, 'laura', 'asuka', 0);
+(22, 'lucas', 'bob', 0),
+(29, 'lucas', 'laura', 0);
 
 -- --------------------------------------------------------
 
@@ -58,9 +57,11 @@ CREATE TABLE `categorie` (
 --
 
 INSERT INTO `categorie` (`Id_categorie`, `Libelle_categorie`) VALUES
+(0, 'autre'),
 (1, 'informatique'),
 (2, 'cinema'),
-(3, 'jeux video');
+(3, 'jeux video'),
+(7, 'star wars');
 
 -- --------------------------------------------------------
 
@@ -83,9 +84,9 @@ CREATE TABLE `profil` (
 --
 
 INSERT INTO `profil` (`Id_profil`, `Pseudo_profil`, `Mail_profil`, `MotDePasse_profil`, `Genre_profil`, `#Id_role`, `avatar`) VALUES
-(15, 'lucas', 'lucas@hotmail.fr', '$2y$10$vlLk/Fd6gQJbLnZa1vicAuPWaJM3EFbC5DHfh2b1wzsoah4Ci6jQi', 'male', 2, '15.jpg'),
-(22, 'laura', 'zffzefzef@zfzef.fr', '$2y$10$uqkArEXYUWNnbo5fphSw5.hF/wsQapltVWCjAu.gOtQ3kkt8zG7ty', 'femelle', 1, 'default.jpg'),
-(24, 'asuka', 'aazeaz', '$2y$10$xNdQOxRrvUIZ79PgHrMx5.VAQc79MGU/ahauVSsgqjdzvwSX9EyQW', 'femelle', 1, '24.png');
+(15, 'lucas', 'lucas@hotmail.fr', '$2y$10$vlLk/Fd6gQJbLnZa1vicAuPWaJM3EFbC5DHfh2b1wzsoah4Ci6jQi', 'Homme', 2, '15.jpg'),
+(22, 'laura', 'zffzefzef@zfzef.fr', '$2y$10$uqkArEXYUWNnbo5fphSw5.hF/wsQapltVWCjAu.gOtQ3kkt8zG7ty', 'Femme', 1, 'default.jpg'),
+(25, 'bob', 'zd', '$2y$10$4Q1yX9hRjW.7oJ/ytZsip.9ACIvshlclI63B96pjDFI4vN6CPTAmq', 'Homme', 1, '25.png');
 
 -- --------------------------------------------------------
 
@@ -99,16 +100,19 @@ CREATE TABLE `question` (
   `Date_creation_question` datetime DEFAULT NULL,
   `#Id_profil` int(11) DEFAULT NULL,
   `#Id_categorie` int(11) DEFAULT NULL,
-  `unique_key` varchar(255) CHARACTER SET latin1 DEFAULT NULL
+  `unique_key` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `Visible_question` varchar(535) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `question`
 --
 
-INSERT INTO `question` (`Id_question`, `Titre_question`, `Date_creation_question`, `#Id_profil`, `#Id_categorie`, `unique_key`) VALUES
-(96, 'wesh ', '2020-06-03 11:54:30', 15, 1, '5ed7735618016'),
-(97, 'les gars', '2020-06-03 11:54:37', 15, 1, '5ed7735d2b8ac');
+INSERT INTO `question` (`Id_question`, `Titre_question`, `Date_creation_question`, `#Id_profil`, `#Id_categorie`, `unique_key`, `Visible_question`) VALUES
+(126, 'j\'aime manger du chocolat et vous ?', '2020-06-20 17:14:32', 15, 0, '5eee27d83a3b6', 'all'),
+(130, 'pc ou console ?', '2020-06-21 00:00:52', 15, 0, '5eee871480966', 'all'),
+(133, 'doom eternal était incroyable ', '2020-06-29 22:59:50', 22, 0, '5efa564645f0a', '15'),
+(134, 'la dernière trilogie de starwars était une honte (solo et rogue one était incroyable)', '2020-06-29 23:02:05', 25, 7, '5efa56cd0a48d', 'all');
 
 -- --------------------------------------------------------
 
@@ -124,6 +128,16 @@ CREATE TABLE `reponse` (
   `#Id_question` int(11) NOT NULL,
   `#unique_key` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `reponse`
+--
+
+INSERT INTO `reponse` (`Id_reponse`, `Contenu_reponse`, `Date_reponse`, `#Id_profil`, `#Id_question`, `#unique_key`) VALUES
+(2, 'bien vu', '2020-06-20 23:28:33', 15, 126, '5eee27d83a3b6'),
+(3, 'totalement', '2020-06-21 00:20:54', 15, 130, '5eee871480966'),
+(4, 'totalement, un échec !', '2020-06-29 23:03:58', 15, 134, '5efa56cd0a48d'),
+(5, 'un chef d\'oeuvre', '2020-06-29 23:04:39', 15, 133, '5efa564645f0a');
 
 -- --------------------------------------------------------
 
@@ -156,6 +170,15 @@ CREATE TABLE `vote` (
   `#Id_question` int(11) NOT NULL,
   `#Id_profil` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `vote`
+--
+
+INSERT INTO `vote` (`Id_vote`, `Action_vote`, `#Id_question`, `#Id_profil`) VALUES
+(83, 1, 133, 22),
+(84, 1, 133, 15),
+(85, 1, 134, 15);
 
 --
 -- Index pour les tables exportées
@@ -218,27 +241,27 @@ ALTER TABLE `vote`
 -- AUTO_INCREMENT pour la table `amis`
 --
 ALTER TABLE `amis`
-  MODIFY `Id_amis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `Id_amis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT pour la table `categorie`
 --
 ALTER TABLE `categorie`
-  MODIFY `Id_categorie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id_categorie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT pour la table `profil`
 --
 ALTER TABLE `profil`
-  MODIFY `Id_profil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `Id_profil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT pour la table `question`
 --
 ALTER TABLE `question`
-  MODIFY `Id_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `Id_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 --
 -- AUTO_INCREMENT pour la table `reponse`
 --
 ALTER TABLE `reponse`
-  MODIFY `Id_reponse` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_reponse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT pour la table `role`
 --
@@ -248,7 +271,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT pour la table `vote`
 --
 ALTER TABLE `vote`
-  MODIFY `Id_vote` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Id_vote` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 --
 -- Contraintes pour les tables exportées
 --

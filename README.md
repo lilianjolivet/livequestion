@@ -14,6 +14,12 @@ Développement d’un site type Live Question un site de question réponse. Ce s
 
 Installation : 
 
+compte disponible:
+
+nom: lucas mdp:ggg (administrateur)
+nom: laura mdp:fff
+nom: bob mdp:aaa
+
 Afin de pouvoir utiliser ce projet il vous faut télécharger les fichier via la branche master. Lancer index.php dans votre localhost,
 vous allez être diriger sur la homepage, appuyer sur ce connecter, une fois sur la page d'inscription/connexion créer votre compte  et vous voila sur livequestion poser vos question répondez à celle des autres utilisateur et modifier votre profil. Si vous souhaitez vous connecter en tant qu'administrateur il vous suiffit de rentrer en login lucas et mot de passe ggg à vous les fonctionnalités suplémantaire.
 
