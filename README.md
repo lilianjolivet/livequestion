@@ -16,9 +16,9 @@ Installation :
 
 compte disponible:
 
-nom: lucas mdp:ggg (administrateur)
-nom: laura mdp:fff
-nom: bob mdp:aaa
+nom: lucas mdp:ggg (administrateur)/ 
+nom: laura mdp:fff/ 
+nom: bob mdp:aaa/ 
 nom: booker dewitt mdp:zzz
 
 Afin de pouvoir utiliser ce projet il vous faut télécharger les fichier via la branche master. Lancer index.php dans votre localhost,
