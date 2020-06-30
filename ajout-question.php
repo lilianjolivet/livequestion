@@ -29,6 +29,21 @@
                 if(isset($_POST['question']) && !empty($_POST['question']) && strlen($_POST['question'])> 255){
                     echo 'votre question est trop longue (maximum 255 caractères)';
                 }
+                $refresh = 0;
+                if(!empty($_POST['question']) && strlen($_POST['question'])<= 255){
+                    if(empty($_POST['friend'])){
+                        $_POST['friend'] = 'all';
+                    }else{
+                        $_POST['friend'] = implode(":",$_POST['friend']);
+                    }
+                    $verifDoublon = recupLaQuestionTitre($_POST['question']);
+                    if(empty($verifDoublon)){
+                        insertQuestion($_POST);
+                        $refresh = 1; 
+                    }else{
+                        echo '<span class="erreur">La question est déjà existante</span>';
+                    }
+                }
                 ?>
 			</span>
             <div class="form-group col-md-4">
@@ -70,18 +85,6 @@
         <button type="submit" class="btn">valider</button>
     </form>
 </div>
-<?php 
-$refresh = 0;
-if(!empty($_POST['question']) && strlen($_POST['question'])<= 255){
-    if(empty($_POST['friend'])){
-        $_POST['friend'] = 'all';
-    }else{
-        $_POST['friend'] = implode(":",$_POST['friend']);
-    }
-    insertQuestion($_POST);
-    $refresh = 1;  
-}
-?>
 <script>
     function reload($nbe){
         if($nbe === 1){
