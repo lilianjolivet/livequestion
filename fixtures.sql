@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Lun 29 Juin 2020 à 21:05
+-- Généré le :  Mar 30 Juin 2020 à 11:50
 -- Version du serveur :  5.7.11
 -- Version de PHP :  7.0.3
 
@@ -39,7 +39,9 @@ CREATE TABLE `amis` (
 
 INSERT INTO `amis` (`Id_amis`, `Profil_demande`, `Profil_reception`, `Demande_amis`) VALUES
 (22, 'lucas', 'bob', 0),
-(29, 'lucas', 'laura', 0);
+(29, 'lucas', 'laura', 0),
+(30, 'booker dewitt', 'lucas', 1),
+(31, 'booker dewitt', 'bob', 1);
 
 -- --------------------------------------------------------
 
@@ -86,7 +88,8 @@ CREATE TABLE `profil` (
 INSERT INTO `profil` (`Id_profil`, `Pseudo_profil`, `Mail_profil`, `MotDePasse_profil`, `Genre_profil`, `#Id_role`, `avatar`) VALUES
 (15, 'lucas', 'lucas@hotmail.fr', '$2y$10$vlLk/Fd6gQJbLnZa1vicAuPWaJM3EFbC5DHfh2b1wzsoah4Ci6jQi', 'Homme', 2, '15.jpg'),
 (22, 'laura', 'zffzefzef@zfzef.fr', '$2y$10$uqkArEXYUWNnbo5fphSw5.hF/wsQapltVWCjAu.gOtQ3kkt8zG7ty', 'Femme', 1, 'default.jpg'),
-(25, 'bob', 'zd', '$2y$10$4Q1yX9hRjW.7oJ/ytZsip.9ACIvshlclI63B96pjDFI4vN6CPTAmq', 'Homme', 1, '25.png');
+(25, 'bob', 'zd', '$2y$10$4Q1yX9hRjW.7oJ/ytZsip.9ACIvshlclI63B96pjDFI4vN6CPTAmq', 'Homme', 1, '25.png'),
+(26, 'booker dewitt', 'booker@test.fr', '$2y$10$Zfhy/N6/BNGoif1rPD5KxerDjNIHPbFggjEVsflNeUxMpfQL4Vah2', 'Homme', 1, 'default.jpg');
 
 -- --------------------------------------------------------
 
@@ -111,7 +114,7 @@ CREATE TABLE `question` (
 INSERT INTO `question` (`Id_question`, `Titre_question`, `Date_creation_question`, `#Id_profil`, `#Id_categorie`, `unique_key`, `Visible_question`) VALUES
 (126, 'j\'aime manger du chocolat et vous ?', '2020-06-20 17:14:32', 15, 0, '5eee27d83a3b6', 'all'),
 (130, 'pc ou console ?', '2020-06-21 00:00:52', 15, 0, '5eee871480966', 'all'),
-(133, 'doom eternal était incroyable ', '2020-06-29 22:59:50', 22, 0, '5efa564645f0a', '15'),
+(133, 'doom eternal était incroyable ', '2020-06-29 22:59:50', 22, 3, '5efa564645f0a', '15'),
 (134, 'la dernière trilogie de starwars était une honte (solo et rogue one était incroyable)', '2020-06-29 23:02:05', 25, 7, '5efa56cd0a48d', 'all');
 
 -- --------------------------------------------------------
@@ -137,7 +140,8 @@ INSERT INTO `reponse` (`Id_reponse`, `Contenu_reponse`, `Date_reponse`, `#Id_pro
 (2, 'bien vu', '2020-06-20 23:28:33', 15, 126, '5eee27d83a3b6'),
 (3, 'totalement', '2020-06-21 00:20:54', 15, 130, '5eee871480966'),
 (4, 'totalement, un échec !', '2020-06-29 23:03:58', 15, 134, '5efa56cd0a48d'),
-(5, 'un chef d\'oeuvre', '2020-06-29 23:04:39', 15, 133, '5efa564645f0a');
+(5, 'un chef d\'oeuvre', '2020-06-29 23:04:39', 15, 133, '5efa564645f0a'),
+(6, 'j\'aime bien la dernière trilogie', '2020-06-30 13:14:07', 26, 134, '5efa56cd0a48d');
 
 -- --------------------------------------------------------
 
@@ -177,8 +181,10 @@ CREATE TABLE `vote` (
 
 INSERT INTO `vote` (`Id_vote`, `Action_vote`, `#Id_question`, `#Id_profil`) VALUES
 (83, 1, 133, 22),
-(84, 1, 133, 15),
-(85, 1, 134, 15);
+(85, 1, 134, 15),
+(86, 1, 133, 15),
+(87, 1, 134, 26),
+(88, 1, 126, 26);
 
 --
 -- Index pour les tables exportées
@@ -241,7 +247,7 @@ ALTER TABLE `vote`
 -- AUTO_INCREMENT pour la table `amis`
 --
 ALTER TABLE `amis`
-  MODIFY `Id_amis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `Id_amis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT pour la table `categorie`
 --
@@ -251,17 +257,17 @@ ALTER TABLE `categorie`
 -- AUTO_INCREMENT pour la table `profil`
 --
 ALTER TABLE `profil`
-  MODIFY `Id_profil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `Id_profil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT pour la table `question`
 --
 ALTER TABLE `question`
-  MODIFY `Id_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+  MODIFY `Id_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
 --
 -- AUTO_INCREMENT pour la table `reponse`
 --
 ALTER TABLE `reponse`
-  MODIFY `Id_reponse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Id_reponse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT pour la table `role`
 --
@@ -271,7 +277,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT pour la table `vote`
 --
 ALTER TABLE `vote`
-  MODIFY `Id_vote` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `Id_vote` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 --
 -- Contraintes pour les tables exportées
 --
